@@ -1,69 +1,108 @@
 package lk.sliit.itpm.demo.document;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.*;
+
+import jakarta.validation.constraints.*;
+import lombok.*;
+
 import java.util.Date;
 
-@Document(collection = "home_inventory")
-public class inventory {
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "inventory")
+public class Inventory {
+
     @Id
-    private String id;
-    private String userId;
-    private String productName;
+    @GeneratedValue(strategy = GenerationType.AUTO) // Auto-generate unique ID
     private String productId;
-    private int quantity;
-    private double productValue;
-    private Date purchaseDate;
-    private int warrantyPeriod;
-    private String productCategory;
-    private String productImage;
 
-    public inventory() {}
+    @NotNull(message = "User ID is required")
+    private String userId;
 
-    public inventory(String userId, String productName, String productId, int quantity, double productValue, Date purchaseDate, int warrantyPeriod, String productCategory, String productImage) {
+    public void setUserId(String userId) {
         this.userId = userId;
-        this.productName = productName;
-        this.productId = productId;
-        this.quantity = quantity;
-        this.productValue = productValue;
-        this.purchaseDate = purchaseDate;
-        this.warrantyPeriod = warrantyPeriod;
-        this.productCategory = productCategory;
-        this.productImage = productImage;
     }
 
-    // Getters and Setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public String getUserId() {
+        return userId;
+    }
 
-    public String getUserId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
+    @NotBlank(message = "Product name is required")
+    private String productName;
 
-    public String getProductName() { return productName; }
-    public void setProductName(String productName) { this.productName = productName; }
+    public String getProductName() {
+        return productName;
+    }
 
-    public String getProductId() { return productId; }
-    public void setProductId(String productId) { this.productId = productId; }
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    @Positive(message = "Quantity must be a positive number")
+    private int quantity;
 
-    public double getProductValue() { return productValue; }
-    public void setProductValue(double productValue) { this.productValue = productValue; }
+    public int getQuantity() {
+        return quantity;
+    }
 
-    public Date getPurchaseDate() { return purchaseDate; }
-    public void setPurchaseDate(Date purchaseDate) { this.purchaseDate = purchaseDate; }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-    public int getWarrantyPeriod() { return warrantyPeriod; }
-    public void setWarrantyPeriod(int warrantyPeriod) { this.warrantyPeriod = warrantyPeriod; }
+    @Positive(message = "Product value must be a positive number")
+    private double productValue;
 
-    public String getProductCategory() { return productCategory; }
-    public void setProductCategory(String productCategory) { this.productCategory = productCategory; }
+    public double getProductValue() {
+        return productValue;
+    }
 
-    public String getProductImage() { return productImage; }
-    public void setProductImage(String productImage) { this.productImage = productImage; }
+    public void setProductValue(double productValue) {
+        this.productValue = productValue;
+    }
 
+    @PastOrPresent(message = "Purchase date cannot be in the future")
+    private Date purchaseDate;
 
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
 
-    
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    @PositiveOrZero(message = "Warranty period cannot be negative")
+    private int warrantyPeriod;
+
+    public int getWarrantyPeriod() {
+        return warrantyPeriod;
+    }
+
+    public void setWarrantyPeriod(int warrantyPeriod) {
+        this.warrantyPeriod = warrantyPeriod;
+    }
+
+    @NotBlank(message = "Product category is required")
+    private String productCategory;
+
+    public String getProductCategory() {
+        return productCategory;
+    }
+
+    public void setProductCategory(String productCategory) {
+        this.productCategory = productCategory;
+    }
+
+    private String productImage; // Image URL
+
+    public String getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
+    }
 }

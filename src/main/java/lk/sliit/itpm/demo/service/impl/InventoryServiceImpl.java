@@ -1,45 +1,86 @@
 package lk.sliit.itpm.demo.service.impl;
 
-import java.util.List;
-import java.util.Optional;
-import lk.sliit.itpm.demo.document.inventory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import lk.sliit.itpm.demo.document.Inventory;
+import lk.sliit.itpm.demo.dto.InventoryDTO;
 import lk.sliit.itpm.demo.repository.InventoryRepository;
 import lk.sliit.itpm.demo.service.InventoryService;
 
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 public class InventoryServiceImpl implements InventoryService {
-    private final InventoryRepository repository;
+    @Autowired
+    private InventoryRepository inventoryRepository;
 
-    public InventoryServiceImpl(InventoryRepository repository) {
-        this.repository = repository;
+    @Override
+    public InventoryDTO createProduct(InventoryDTO inventoryDTO) {
+        Inventory inventory = new Inventory();
+        inventory.setUserId(inventoryDTO.getUserId());
+        inventory.setProductName(inventoryDTO.getProductName());
+        inventory.setQuantity(inventoryDTO.getQuantity());
+        inventory.setProductValue(inventoryDTO.getProductValue());
+        inventory.setPurchaseDate(inventoryDTO.getPurchaseDate());
+        inventory.setWarrantyPeriod(inventoryDTO.getWarrantyPeriod());
+        inventory.setProductCategory(inventoryDTO.getProductCategory());
+        inventory.setProductImage(inventoryDTO.getProductImage());
+
+        Inventory savedProduct = inventoryRepository.save(inventory);
+        inventoryDTO.setProductId(savedProduct.getProductId());
+        return inventoryDTO;
     }
 
     @Override
-    public List<inventory> getAllItems() {
-        return repository.findAll();
+    public InventoryDTO getProductById(String productId) {
+        Inventory inventory = inventoryRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        return new InventoryDTO(inventory.getProductId(), inventory.getUserId(), inventory.getProductName(),
+        inventory.getQuantity(), inventory.getProductValue(), inventory.getPurchaseDate(),
+        inventory.getWarrantyPeriod(), inventory.getProductCategory(), inventory.getProductImage());
     }
 
     @Override
-    public Optional<inventory> getItemById(String id) {
-        return repository.findById(id);
+    public List<InventoryDTO> getAllProducts() {
+        return inventoryRepository.findAll().stream().map(inventory -> 
+            new InventoryDTO(inventory.getProductId(), inventory.getUserId(), inventory.getProductName(),
+            inventory.getQuantity(), inventory.getProductValue(), inventory.getPurchaseDate(),
+            inventory.getWarrantyPeriod(), inventory.getProductCategory(), inventory.getProductImage())
+        ).collect(Collectors.toList());
     }
 
     @Override
-    public inventory createItem(inventory item) {
-        return repository.save(item);
+    public List<InventoryDTO> getProductsByUserId(String userId) {
+        return inventoryRepository.findByUserId(userId).stream().map(inventory ->
+            new InventoryDTO(inventory.getProductId(), inventory.getUserId(), inventory.getProductName(),
+            inventory.getQuantity(), inventory.getProductValue(), inventory.getPurchaseDate(),
+            inventory.getWarrantyPeriod(), inventory.getProductCategory(), inventory.getProductImage())
+        ).collect(Collectors.toList());
     }
 
     @Override
-    public inventory updateItem(String id, inventory item) {
-        if (repository.existsById(id)) {
-            item.setId(id);
-            return repository.save(item);
-        }
-        return null;
+    public InventoryDTO updateProduct(String productId, InventoryDTO inventoryDTO) {
+        Inventory existingProduct = inventoryRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        existingProduct.setProductName(inventoryDTO.getProductName());
+        existingProduct.setQuantity(inventoryDTO.getQuantity());
+        existingProduct.setProductValue(inventoryDTO.getProductValue());
+        existingProduct.setPurchaseDate(inventoryDTO.getPurchaseDate());
+        existingProduct.setWarrantyPeriod(inventoryDTO.getWarrantyPeriod());
+        existingProduct.setProductCategory(inventoryDTO.getProductCategory());
+        existingProduct.setProductImage(inventoryDTO.getProductImage());
+
+        inventoryRepository.save(existingProduct);
+        return inventoryDTO;
     }
 
     @Override
-    public void deleteItem(String id) {
-        repository.deleteById(id);
+    public void deleteProduct(String productId) {
+        inventoryRepository.deleteById(productId);
     }
+
     
 }

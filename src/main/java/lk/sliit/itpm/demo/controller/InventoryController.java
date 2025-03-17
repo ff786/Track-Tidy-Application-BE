@@ -1,48 +1,43 @@
 package lk.sliit.itpm.demo.controller;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import lk.sliit.itpm.demo.document.inventory;
+import jakarta.validation.Valid;
+import lk.sliit.itpm.demo.dto.InventoryDTO;
 import lk.sliit.itpm.demo.service.InventoryService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/inven")
+@RequestMapping("/api/products")
 public class InventoryController {
-     private final InventoryService service;
-
-    public InventoryController(InventoryService service) {
-        this.service = service;
-    }
-
-    @GetMapping
-    public List<inventory> getAllItems() {
-        return service.getAllItems();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<inventory> getItemById(@PathVariable String id) {
-        return service.getItemById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
+    
+    @Autowired
+    private InventoryService inventoryService;
 
     @PostMapping
-    public inventory createItem(@RequestBody inventory item) {
-        return service.createItem(item);
+    public InventoryDTO createProduct(@Valid @RequestBody InventoryDTO inventoryDTO) {
+        return inventoryService.createProduct(inventoryDTO);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<inventory> updateItem(@PathVariable String id, @RequestBody inventory item) {
-        inventory updated = service.updateItem(id, item);
-        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+    @GetMapping("/{productId}")
+    public InventoryDTO getProductById(@PathVariable String productId) {
+        return inventoryService.getProductById(productId);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteItem(@PathVariable String id) {
-        service.deleteItem(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/user/{userId}")
+    public List<InventoryDTO> getProductsByUserId(@PathVariable String userId) {
+        return inventoryService.getProductsByUserId(userId);
+    }
+
+    @PutMapping("/{productId}")
+    public InventoryDTO updateProduct(@PathVariable String productId, @Valid @RequestBody InventoryDTO inventoryDTO) {
+        return inventoryService.updateProduct(productId, inventoryDTO);
+    }
+
+    @DeleteMapping("/{productId}")
+    public void deleteProduct(@PathVariable String productId) {
+        inventoryService.deleteProduct(productId);
     }
     
 }
