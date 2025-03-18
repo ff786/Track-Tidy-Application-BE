@@ -2,6 +2,7 @@ package lk.sliit.itpm.demo.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import lk.sliit.itpm.demo.document.Inventory;
 import lk.sliit.itpm.demo.dto.InventoryDTO;
 import lk.sliit.itpm.demo.repository.InventoryRepository;
@@ -9,9 +10,9 @@ import lk.sliit.itpm.demo.service.InventoryService;
 
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class InventoryServiceImpl implements InventoryService {
     @Autowired
     private InventoryRepository inventoryRepository;
