@@ -1,6 +1,5 @@
 package lk.sliit.itpm.demo.document;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TrackInventory {
+public class TrackGrocery {
 
     @Id
     private String id;
@@ -30,5 +29,4 @@ public class TrackInventory {
     private int amount;
     private byte[] receipt;
     private User approvedBy;
-
 }

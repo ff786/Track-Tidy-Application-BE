@@ -1,10 +1,11 @@
 package lk.sliit.itpm.demo.controller;
 
-
 import jakarta.validation.constraints.NotNull;
-import lk.sliit.itpm.demo.document.TrackService;
-import lk.sliit.itpm.demo.dto.TidyServiceDTO;
-import lk.sliit.itpm.demo.service.TrackTidyService;
+import lk.sliit.itpm.demo.document.TrackGrocery;
+import lk.sliit.itpm.demo.document.TrackInventory;
+import lk.sliit.itpm.demo.dto.TidyGroceryDTO;
+import lk.sliit.itpm.demo.dto.TidyInventoryDTO;
+import lk.sliit.itpm.demo.service.TrackTidyGroceryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,20 +17,22 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
-@RequestMapping("service")
+@RequestMapping("grocery")
 @Slf4j
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class ServicesController {
+public class GroceryTrackController {
 
-    private final TrackTidyService trackTidyService;
+    private final TrackTidyGroceryService trackTidyGroceryService;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public ServicesController(TrackTidyService trackTidyService) {
-        this.trackTidyService = trackTidyService;
+    public GroceryTrackController(TrackTidyGroceryService trackTidyGroceryService) {
+        this.trackTidyGroceryService = trackTidyGroceryService;
     }
 
+
+
     @PostMapping("create")
-    public ResponseEntity<TrackService> createTidyService(
+    public ResponseEntity<TrackGrocery> createTidyGrocery(
             @RequestParam("firstName") @NotNull String firstName,
             @RequestParam("lastName") @NotNull String lastName,
             @RequestParam("memberId") @NotNull String memberId,
@@ -40,7 +43,7 @@ public class ServicesController {
             @RequestParam("serviceType") @NotNull String serviceType,
             @RequestParam("receipt") @NotNull MultipartFile receipt) throws ParseException, IOException {
 
-        TidyServiceDTO build = TidyServiceDTO.builder()
+        TidyGroceryDTO build = TidyGroceryDTO.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .memberId(memberId)
@@ -52,22 +55,22 @@ public class ServicesController {
                 .receipt(receipt.getBytes())
                 .build();
 
-        return ResponseEntity.status(201).body(trackTidyService.createTidyService(build));
+        return ResponseEntity.status(201).body(trackTidyGroceryService.createTidyGrocery(build));
 
     }
 
     @DeleteMapping("delete")
-    public void deleteTidyService(@RequestParam("id") @NotNull String id) {
-        trackTidyService.deleteTidyService(id);
+    public void deleteTidyInventory(@RequestParam("id") @NotNull String id) {
+        trackTidyGroceryService.deleteTidyGrocery(id);
     }
 
     @GetMapping("getAll")
-    public List<TrackService> getAllTidyService() {
-        return trackTidyService.getAllTidyService();
+    public List<TrackGrocery> getAllTidyGrocery() {
+        return trackTidyGroceryService.getAllTidyGrocery();
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<TrackService> updateTidyService(
+    public ResponseEntity<TrackGrocery> updateTidyGrocery(
             @PathVariable("id") @NotNull String id,
             @RequestParam("firstName") @NotNull String firstName,
             @RequestParam("lastName") @NotNull String lastName,
@@ -77,7 +80,7 @@ public class ServicesController {
             @RequestParam("amount") @NotNull int amount,
             @RequestParam("receipt") MultipartFile receipt) throws ParseException, IOException {
 
-        TidyServiceDTO build = TidyServiceDTO.builder()
+        TidyGroceryDTO build = TidyGroceryDTO.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .memberId(memberId)
@@ -87,7 +90,7 @@ public class ServicesController {
                 .receipt(receipt.getBytes())
                 .build();
 
-        return ResponseEntity.status(201).body(trackTidyService.updateTidyService(id, build));
+        return ResponseEntity.status(201).body(trackTidyGroceryService.updateTidyGrocery(id, build));
 
     }
 }

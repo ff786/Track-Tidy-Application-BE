@@ -29,8 +29,6 @@ public class TrackService {
     private String serviceType;
     private int amount;
     private byte[] receipt;
-
-    private boolean isApproved = false;
     private User approvedBy;
 
 }
