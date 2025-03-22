@@ -15,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TrackService {
+public class TrackInventory {
 
     @Id
     private String id;

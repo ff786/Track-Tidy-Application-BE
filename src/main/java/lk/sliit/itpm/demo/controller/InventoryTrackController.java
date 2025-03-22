@@ -1,11 +1,9 @@
 package lk.sliit.itpm.demo.controller;
 
-
 import jakarta.validation.constraints.NotNull;
-import lk.sliit.itpm.demo.TrackTidy;
-import lk.sliit.itpm.demo.document.TrackService;
-import lk.sliit.itpm.demo.dto.TidyServiceDTO;
-import lk.sliit.itpm.demo.service.TrackTidyService;
+import lk.sliit.itpm.demo.document.TrackInventory;
+import lk.sliit.itpm.demo.dto.TidyInventoryDTO;
+import lk.sliit.itpm.demo.service.TrackTidyInventoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,20 +15,20 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
-@RequestMapping("service")
+@RequestMapping("inventory")
 @Slf4j
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class ServicesController {
+public class InventoryTrackController {
 
-    private final TrackTidyService trackTidyService;
+    private final TrackTidyInventoryService trackTidyInventoryService;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public ServicesController(TrackTidyService trackTidyService) {
-        this.trackTidyService = trackTidyService;
+    public InventoryTrackController(TrackTidyInventoryService trackTidyInventoryService) {
+        this.trackTidyInventoryService = trackTidyInventoryService;
     }
 
     @PostMapping("create")
-    public ResponseEntity<TrackService> createTidyService(
+    public ResponseEntity<TrackInventory> createTidyInventory(
             @RequestParam("firstName") @NotNull String firstName,
             @RequestParam("lastName") @NotNull String lastName,
             @RequestParam("memberId") @NotNull String memberId,
@@ -41,7 +39,7 @@ public class ServicesController {
             @RequestParam("serviceType") @NotNull String serviceType,
             @RequestParam("receipt") @NotNull MultipartFile receipt) throws ParseException, IOException {
 
-        TidyServiceDTO build = TidyServiceDTO.builder()
+        TidyInventoryDTO build = TidyInventoryDTO.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .memberId(memberId)
@@ -53,22 +51,22 @@ public class ServicesController {
                 .receipt(receipt.getBytes())
                 .build();
 
-        return ResponseEntity.status(201).body(trackTidyService.createTidyService(build));
+        return ResponseEntity.status(201).body(trackTidyInventoryService.createTidyInventory(build));
 
     }
 
     @DeleteMapping("delete")
-    public void deleteTidyService(@RequestParam("id") @NotNull String id) {
-        trackTidyService.deleteTidyService(id);
+    public void deleteTidyInventory(@RequestParam("id") @NotNull String id) {
+        trackTidyInventoryService.deleteTidyInventory(id);
     }
 
     @GetMapping("getAll")
-    public List<TrackService> getAllTidyService() {
-        return trackTidyService.getAllTidyService();
+    public List<TrackInventory> getAllTidyInventory() {
+        return trackTidyInventoryService.getAllTidyInventory();
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<TrackService> updateTidyService(
+    public ResponseEntity<TrackInventory> updateTidyInventory(
             @PathVariable("id") @NotNull String id,
             @RequestParam("firstName") @NotNull String firstName,
             @RequestParam("lastName") @NotNull String lastName,
@@ -78,7 +76,7 @@ public class ServicesController {
             @RequestParam("amount") @NotNull int amount,
             @RequestParam("receipt") MultipartFile receipt) throws ParseException, IOException {
 
-        TidyServiceDTO build = TidyServiceDTO.builder()
+        TidyInventoryDTO build = TidyInventoryDTO.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .memberId(memberId)
@@ -88,7 +86,7 @@ public class ServicesController {
                 .receipt(receipt.getBytes())
                 .build();
 
-        return ResponseEntity.status(201).body(trackTidyService.updateTidyService(id, build));
+        return ResponseEntity.status(201).body(trackTidyInventoryService.updateTidyInventory(id, build));
 
     }
 }
