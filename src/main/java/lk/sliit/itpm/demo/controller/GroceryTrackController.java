@@ -44,6 +44,7 @@ public class GroceryTrackController {
         TidyGroceryDTO build = TidyGroceryDTO.builder()
                 .itemName(itemName)
                 .memberId(memberId)
+                .price(price)
                 .purchaseDate(dateFormat.parse(purchaseDate))
                 .expiryDate(dateFormat.parse(expiryDate))
                 .phoneNumber(phoneNumber)
