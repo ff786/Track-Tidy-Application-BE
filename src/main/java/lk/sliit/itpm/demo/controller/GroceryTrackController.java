@@ -2,9 +2,7 @@ package lk.sliit.itpm.demo.controller;
 
 import jakarta.validation.constraints.NotNull;
 import lk.sliit.itpm.demo.document.TrackGrocery;
-import lk.sliit.itpm.demo.document.TrackInventory;
 import lk.sliit.itpm.demo.dto.TidyGroceryDTO;
-import lk.sliit.itpm.demo.dto.TidyInventoryDTO;
 import lk.sliit.itpm.demo.service.TrackTidyGroceryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
