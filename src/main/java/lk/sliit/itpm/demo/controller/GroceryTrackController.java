@@ -33,26 +33,21 @@ public class GroceryTrackController {
 
     @PostMapping("create")
     public ResponseEntity<TrackGrocery> createTidyGrocery(
-            @RequestParam("firstName") @NotNull String firstName,
-            @RequestParam("lastName") @NotNull String lastName,
+            @RequestParam("itemName") @NotNull String itemName,
+            @RequestParam("price") @NotNull int price,
             @RequestParam("memberId") @NotNull String memberId,
-            @RequestParam("dob") @NotNull String date,
-            @RequestParam("gender") @NotNull String gender,
             @RequestParam("phoneNumber") @NotNull String phoneNumber,
-            @RequestParam("email") @NotNull String email,
-            @RequestParam("serviceType") @NotNull String serviceType,
-            @RequestParam("receipt") @NotNull MultipartFile receipt) throws ParseException, IOException {
+            @RequestParam("purchaseDate") @NotNull String purchaseDate,
+            @RequestParam("expiryDate") @NotNull String expiryDate,
+            @RequestParam("itemImage") @NotNull MultipartFile itemImage) throws ParseException, IOException {
 
         TidyGroceryDTO build = TidyGroceryDTO.builder()
-                .firstName(firstName)
-                .lastName(lastName)
+                .itemName(itemName)
                 .memberId(memberId)
-                .dob(dateFormat.parse(date))
-                .gender(gender)
+                .purchaseDate(dateFormat.parse(purchaseDate))
+                .expiryDate(dateFormat.parse(expiryDate))
                 .phoneNumber(phoneNumber)
-                .email(email)
-                .serviceType(serviceType)
-                .receipt(receipt.getBytes())
+                .itemImage(itemImage.getBytes())
                 .build();
 
         return ResponseEntity.status(201).body(trackTidyGroceryService.createTidyGrocery(build));
@@ -72,22 +67,19 @@ public class GroceryTrackController {
     @PutMapping("update/{id}")
     public ResponseEntity<TrackGrocery> updateTidyGrocery(
             @PathVariable("id") @NotNull String id,
-            @RequestParam("firstName") @NotNull String firstName,
-            @RequestParam("lastName") @NotNull String lastName,
+            @RequestParam("itemName") @NotNull String itemName,
             @RequestParam("memberId") @NotNull String memberId,
-            @RequestParam("email") @NotNull String email,
             @RequestParam("phoneNumber") @NotNull String phoneNumber,
-            @RequestParam("amount") @NotNull int amount,
-            @RequestParam("receipt") MultipartFile receipt) throws ParseException, IOException {
+            @RequestParam("price") @NotNull int price,
+            @RequestParam("itemImage") MultipartFile itemImage) throws ParseException, IOException {
 
         TidyGroceryDTO build = TidyGroceryDTO.builder()
-                .firstName(firstName)
-                .lastName(lastName)
+                .itemName(itemName)
                 .memberId(memberId)
-                .email(email)
+                .memberId(memberId)
                 .phoneNumber(phoneNumber)
-                .amount(amount)
-                .receipt(receipt.getBytes())
+                .price(price)
+                .itemImage(itemImage.getBytes())
                 .build();
 
         return ResponseEntity.status(201).body(trackTidyGroceryService.updateTidyGrocery(id, build));

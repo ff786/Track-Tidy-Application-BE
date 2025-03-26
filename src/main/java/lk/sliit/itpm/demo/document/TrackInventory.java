@@ -19,16 +19,15 @@ public class TrackInventory {
 
     @Id
     private String id;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String memberId;
-    private Date dob;
-    private String gender;
-    private String phoneNumber;
-    private String serviceType;
-    private int amount;
-    private byte[] receipt;
+    private String productName;
+    private String productId;
+    private int quantity;
+    private Date purchaseDate;
+    private int productValue;
+    private Date warrantyDate;
+    private String productCategory;
+    private byte[] ProductImage;
+    private String Faulted;
     private User approvedBy;
 
 }

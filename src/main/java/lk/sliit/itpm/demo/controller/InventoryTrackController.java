@@ -29,26 +29,24 @@ public class InventoryTrackController {
 
     @PostMapping("create")
     public ResponseEntity<TrackInventory> createTidyInventory(
-            @RequestParam("firstName") @NotNull String firstName,
-            @RequestParam("lastName") @NotNull String lastName,
-            @RequestParam("memberId") @NotNull String memberId,
-            @RequestParam("dob") @NotNull String date,
-            @RequestParam("gender") @NotNull String gender,
-            @RequestParam("phoneNumber") @NotNull String phoneNumber,
-            @RequestParam("email") @NotNull String email,
-            @RequestParam("serviceType") @NotNull String serviceType,
-            @RequestParam("receipt") @NotNull MultipartFile receipt) throws ParseException, IOException {
+            @RequestParam("productName") @NotNull String productName,
+            @RequestParam("productId") @NotNull String productId,
+            @RequestParam("quantity") @NotNull int quantity,
+            @RequestParam("purchaseDate") @NotNull String purchaseDate,
+            @RequestParam("productValue") @NotNull int productValue,
+            @RequestParam("warrantyDate") @NotNull String warrantyDate,
+            @RequestParam("productCategory") @NotNull String productCategory,
+            @RequestParam("ProductImage") @NotNull MultipartFile ProductImage) throws ParseException, IOException {
 
         TidyInventoryDTO build = TidyInventoryDTO.builder()
-                .firstName(firstName)
-                .lastName(lastName)
-                .memberId(memberId)
-                .dob(dateFormat.parse(date))
-                .gender(gender)
-                .phoneNumber(phoneNumber)
-                .email(email)
-                .serviceType(serviceType)
-                .receipt(receipt.getBytes())
+                .productName(productName)
+                .productId(productId)
+                .quantity(quantity)
+                .purchaseDate(dateFormat.parse(purchaseDate))
+                .productValue(productValue)
+                .warrantyDate(dateFormat.parse(warrantyDate))
+                .productCategory(productCategory)
+                .ProductImage(ProductImage.getBytes())
                 .build();
 
         return ResponseEntity.status(201).body(trackTidyInventoryService.createTidyInventory(build));
@@ -68,22 +66,20 @@ public class InventoryTrackController {
     @PutMapping("update/{id}")
     public ResponseEntity<TrackInventory> updateTidyInventory(
             @PathVariable("id") @NotNull String id,
-            @RequestParam("firstName") @NotNull String firstName,
-            @RequestParam("lastName") @NotNull String lastName,
-            @RequestParam("memberId") @NotNull String memberId,
-            @RequestParam("email") @NotNull String email,
-            @RequestParam("phoneNumber") @NotNull String phoneNumber,
-            @RequestParam("amount") @NotNull int amount,
-            @RequestParam("receipt") MultipartFile receipt) throws ParseException, IOException {
+            @RequestParam("productId") @NotNull String productId,
+            @RequestParam("quantity") @NotNull int quantity,
+            @RequestParam("productValue") @NotNull int productValue,
+            @RequestParam("productCategory") @NotNull String productCategory,
+            @RequestParam("Faulted") @NotNull String Faulted,
+            @RequestParam("ProductImage") @NotNull MultipartFile ProductImage) throws ParseException, IOException {
 
         TidyInventoryDTO build = TidyInventoryDTO.builder()
-                .firstName(firstName)
-                .lastName(lastName)
-                .memberId(memberId)
-                .email(email)
-                .phoneNumber(phoneNumber)
-                .amount(amount)
-                .receipt(receipt.getBytes())
+                .productId(productId)
+                .quantity(quantity)
+                .productValue(productValue)
+                .productCategory(productCategory)
+                .Faulted(Faulted)
+                .ProductImage(ProductImage.getBytes())
                 .build();
 
         return ResponseEntity.status(201).body(trackTidyInventoryService.updateTidyInventory(id, build));

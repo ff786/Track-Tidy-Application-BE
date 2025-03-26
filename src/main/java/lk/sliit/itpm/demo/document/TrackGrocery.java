@@ -18,15 +18,12 @@ public class TrackGrocery {
 
     @Id
     private String id;
-    private String email;
-    private String firstName;
-    private String lastName;
+    private String itemName;
     private String memberId;
-    private Date dob;
-    private String gender;
     private String phoneNumber;
-    private String serviceType;
-    private int amount;
-    private byte[] receipt;
+    private int price;
+    private Date purchaseDate;
+    private Date expiryDate;
+    private byte[] itemImage;
     private User approvedBy;
 }
