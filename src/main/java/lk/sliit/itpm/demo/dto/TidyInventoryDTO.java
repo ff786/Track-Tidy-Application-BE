@@ -14,6 +14,7 @@ import java.util.Date;
 public class TidyInventoryDTO {
 
     private String productName;
+    private String userId;
     private String productId;
     private int quantity;
     private Date purchaseDate;
