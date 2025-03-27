@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -32,6 +33,11 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
     @Override
     public List<TrackInventory> getAllTidyInventory() {
         return trackInventoryRepository.findAll();
+    }
+
+    @Override
+    public Optional<TrackInventory> getTidyInventoryById(String id) {
+        return trackInventoryRepository.findById(id);
     }
 
     @Override
