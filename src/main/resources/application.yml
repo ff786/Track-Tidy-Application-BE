@@ -8,7 +8,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://projectITPM:ITPM@123@farsithitpm.7aoob.mongodb.net/
+      uri: mongodb+srv://projectITPM:ITPM123@farsithitpm.7aoob.mongodb.net/
       database: track-tidy
 
 

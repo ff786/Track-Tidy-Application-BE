@@ -66,12 +66,6 @@ public class InventoryTrackController {
         return trackTidyInventoryService.getAllTidyInventory();
     }
 
-    @GetMapping("get/{id}")
-    public ResponseEntity<TrackInventory> getTidyInventoryById(@PathVariable("id") @NotNull String id) {
-        Optional<TrackInventory> inventory = trackTidyInventoryService.getTidyInventoryById(id);
-        return inventory.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
 
     @PutMapping("update/{id}")
     public ResponseEntity<TrackInventory> updateTidyInventory(
