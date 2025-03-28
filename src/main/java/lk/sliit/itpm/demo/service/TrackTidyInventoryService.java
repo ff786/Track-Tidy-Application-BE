@@ -11,6 +11,6 @@ public interface TrackTidyInventoryService {
     void deleteTidyInventory(String TrackTidyId);
     List<TrackInventory> getAllTidyInventory();
     TrackInventory updateTidyInventory(String TrackTidyId, TidyInventoryDTO inventory);
-    void approveTidyInventory(String id);
+    //void approveTidyInventory(String id);
 
 }

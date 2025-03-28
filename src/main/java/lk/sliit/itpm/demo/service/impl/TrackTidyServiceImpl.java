@@ -5,30 +5,50 @@ import lk.sliit.itpm.demo.dto.TidyServiceDTO;
 import lk.sliit.itpm.demo.repository.TrackServiceRepository;
 import lk.sliit.itpm.demo.service.TrackTidyService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.annotation.Id;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
 public class TrackTidyServiceImpl implements TrackTidyService {
 
+    private final ModelMapper modelMapper;
     private final TrackServiceRepository trackServiceRepository;
 
-    public TrackTidyServiceImpl(TrackServiceRepository trackServiceRepository) {
+    public TrackTidyServiceImpl(ModelMapper modelMapper, TrackServiceRepository trackServiceRepository) {
+        this.modelMapper = modelMapper;
         this.trackServiceRepository = trackServiceRepository;
     }
 
 
     @Override
     public TrackService createTidyService(TidyServiceDTO service) {
-        return null;
+
+        TrackService map =TrackService.builder()
+                .memberId(service.getMemberId())
+                .memberName(service.getMemberName())
+                .address(service.getAddress())
+                .email(service.getEmail())
+                .serviceType(service.getServiceType())
+                .serviceDesc(service.getServiceDesc())
+                .referralCode(service.getReferralCode()).build();
+
+        return trackServiceRepository.save(map);
     }
 
     @Override
     public void deleteTidyService(String TrackTidyId) {
-
+        Optional<TrackService> byId = trackServiceRepository.findById(TrackTidyId);
+        if (!byId.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + TrackTidyId);
+        }
+        trackServiceRepository.deleteById(TrackTidyId);
     }
 
     @Override
@@ -38,11 +58,23 @@ public class TrackTidyServiceImpl implements TrackTidyService {
 
     @Override
     public TrackService updateTidyService(String TrackTidyId, TidyServiceDTO service) {
-        return null;
+
+        Optional<TrackService> byId = trackServiceRepository.findById(TrackTidyId);
+        if (!byId.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + TrackTidyId);
+        }
+        TrackService trackService1 = byId.get();
+        trackService1.setMemberName(service.getMemberName());
+        trackService1.setEmail(service.getEmail());
+        trackService1.setServiceType(service.getServiceType());
+        trackService1.setServiceDesc(service.getServiceDesc());
+        trackService1.setPhoneNumber(service.getPhoneNumber());
+        trackService1.setAddress(service.getAddress());
+
+        return trackServiceRepository.save(trackService1);
     }
 
-    @Override
+    /*@Override
     public void approveTidyService(String id) {
-
-    }
+    }*/
 }

@@ -8,7 +8,6 @@ import lk.sliit.itpm.demo.service.TrackTidyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -30,26 +29,22 @@ public class ServicesController {
 
     @PostMapping("create")
     public ResponseEntity<TrackService> createTidyService(
-            @RequestParam("firstName") @NotNull String firstName,
-            @RequestParam("lastName") @NotNull String lastName,
             @RequestParam("memberId") @NotNull String memberId,
-            @RequestParam("dob") @NotNull String date,
-            @RequestParam("gender") @NotNull String gender,
-            @RequestParam("phoneNumber") @NotNull String phoneNumber,
+            @RequestParam("memberName") @NotNull String memberName,
+            @RequestParam("address") @NotNull String address,
             @RequestParam("email") @NotNull String email,
             @RequestParam("serviceType") @NotNull String serviceType,
-            @RequestParam("receipt") @NotNull MultipartFile receipt) throws ParseException, IOException {
+            @RequestParam("serviceDesc") @NotNull String serviceDesc,
+            @RequestParam("referralCode") @NotNull String referralCode ) throws ParseException, IOException {
 
         TidyServiceDTO build = TidyServiceDTO.builder()
-                .firstName(firstName)
-                .lastName(lastName)
                 .memberId(memberId)
-                .dob(dateFormat.parse(date))
-                .gender(gender)
-                .phoneNumber(phoneNumber)
+                .memberName(memberName)
+                .address(address)
                 .email(email)
                 .serviceType(serviceType)
-                .receipt(receipt.getBytes())
+                .serviceDesc(serviceDesc)
+                .referralCode(referralCode)
                 .build();
 
         return ResponseEntity.status(201).body(trackTidyService.createTidyService(build));
@@ -69,22 +64,21 @@ public class ServicesController {
     @PutMapping("update/{id}")
     public ResponseEntity<TrackService> updateTidyService(
             @PathVariable("id") @NotNull String id,
-            @RequestParam("firstName") @NotNull String firstName,
-            @RequestParam("lastName") @NotNull String lastName,
             @RequestParam("memberId") @NotNull String memberId,
+            @RequestParam("memberName") @NotNull String memberName,
             @RequestParam("email") @NotNull String email,
+            @RequestParam("serviceType") @NotNull String serviceType,
+            @RequestParam("serviceDesc") @NotNull String serviceDesc,
             @RequestParam("phoneNumber") @NotNull String phoneNumber,
-            @RequestParam("amount") @NotNull int amount,
-            @RequestParam("receipt") MultipartFile receipt) throws ParseException, IOException {
+            @RequestParam("address") @NotNull String address ) throws ParseException, IOException {
 
         TidyServiceDTO build = TidyServiceDTO.builder()
-                .firstName(firstName)
-                .lastName(lastName)
-                .memberId(memberId)
+                .memberName(memberName)
                 .email(email)
+                .serviceType(serviceType)
+                .serviceDesc(serviceDesc)
                 .phoneNumber(phoneNumber)
-                .amount(amount)
-                .receipt(receipt.getBytes())
+                .address(address)
                 .build();
 
         return ResponseEntity.status(201).body(trackTidyService.updateTidyService(id, build));

@@ -12,6 +12,6 @@ public interface TrackTidyService {
     void deleteTidyService(String TrackTidyId);
     List<TrackService> getAllTidyService();
     TrackService updateTidyService(String TrackTidyId, TidyServiceDTO service);
-    void approveTidyService(String id);
+    //void approveTidyService(String id);
 
 }

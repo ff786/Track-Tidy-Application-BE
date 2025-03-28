@@ -19,16 +19,14 @@ public class TrackService {
 
     @Id
     private String id;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String memberId;
-    private Date dob;
-    private String gender;
-    private String phoneNumber;
     private String serviceType;
-    private int amount;
-    private byte[] receipt;
+    private String serviceDesc;
+    private String memberId;
+    private String memberName;
+    private String address;
+    private String email;
+    private String phoneNumber;
+    private String referralCode;
     private User approvedBy;
 
 }
