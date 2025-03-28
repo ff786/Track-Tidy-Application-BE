@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("inventory")
@@ -66,12 +65,6 @@ public class InventoryTrackController {
         return trackTidyInventoryService.getAllTidyInventory();
     }
 
-    @GetMapping("get/{id}")
-    public ResponseEntity<TrackInventory> getTidyInventoryById(@PathVariable("id") @NotNull String id) {
-        Optional<TrackInventory> inventory = trackTidyInventoryService.getTidyInventoryById(id);
-        return inventory.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
 
     @PutMapping("update/{id}")
     public ResponseEntity<TrackInventory> updateTidyInventory(

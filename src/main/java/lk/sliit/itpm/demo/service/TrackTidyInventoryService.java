@@ -4,7 +4,6 @@ import lk.sliit.itpm.demo.document.TrackInventory;
 import lk.sliit.itpm.demo.dto.TidyInventoryDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface TrackTidyInventoryService {
 
@@ -12,7 +11,6 @@ public interface TrackTidyInventoryService {
     void deleteTidyInventory(String TrackTidyId);
     List<TrackInventory> getAllTidyInventory();
     TrackInventory updateTidyInventory(String TrackTidyId, TidyInventoryDTO inventory);
-    void approveTidyInventory(String id);
-    Optional<TrackInventory> getTidyInventoryById(String id);
+    //void approveTidyInventory(String id);
 
 }
