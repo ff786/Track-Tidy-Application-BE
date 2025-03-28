@@ -37,6 +37,8 @@ public class User implements UserDetails {
     private Boolean isEmailVerified;
     private Boolean isMFAEnabled;
 
+    private String resetToken; // Added field for password reset token
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
