@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("inventory")
@@ -30,6 +31,7 @@ public class InventoryTrackController {
     @PostMapping("create")
     public ResponseEntity<TrackInventory> createTidyInventory(
             @RequestParam("productName") @NotNull String productName,
+            @RequestParam("userId") @NotNull String userId,
             @RequestParam("productId") @NotNull String productId,
             @RequestParam("quantity") @NotNull int quantity,
             @RequestParam("purchaseDate") @NotNull String purchaseDate,
@@ -40,6 +42,7 @@ public class InventoryTrackController {
 
         TidyInventoryDTO build = TidyInventoryDTO.builder()
                 .productName(productName)
+                .userId(userId)
                 .productId(productId)
                 .quantity(quantity)
                 .purchaseDate(dateFormat.parse(purchaseDate))
@@ -61,6 +64,13 @@ public class InventoryTrackController {
     @GetMapping("getAll")
     public List<TrackInventory> getAllTidyInventory() {
         return trackTidyInventoryService.getAllTidyInventory();
+    }
+
+    @GetMapping("get/{id}")
+    public ResponseEntity<TrackInventory> getTidyInventoryById(@PathVariable("id") @NotNull String id) {
+        Optional<TrackInventory> inventory = trackTidyInventoryService.getTidyInventoryById(id);
+        return inventory.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("update/{id}")
