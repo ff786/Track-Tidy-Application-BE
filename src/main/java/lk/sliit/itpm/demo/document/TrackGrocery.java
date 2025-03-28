@@ -18,8 +18,8 @@ public class TrackGrocery {
 
     @Id
     private String id;
-    private String itemName;
     private String memberId;
+    private String itemName;
     private String phoneNumber;
     private int price;
     private Date purchaseDate;

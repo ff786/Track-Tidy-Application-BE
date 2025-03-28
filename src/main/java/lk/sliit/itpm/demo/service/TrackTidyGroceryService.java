@@ -11,5 +11,5 @@ public interface TrackTidyGroceryService {
     void deleteTidyGrocery(String TrackTidyId);
     List<TrackGrocery> getAllTidyGrocery();
     TrackGrocery updateTidyGrocery(String TrackTidyId, TidyGroceryDTO grocery);
-    void approveTidyGrocery(String id);
+//    void approveTidyGrocery(String id);
 }
