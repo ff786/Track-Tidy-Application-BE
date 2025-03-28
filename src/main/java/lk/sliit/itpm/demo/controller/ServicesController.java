@@ -21,7 +21,7 @@ import java.util.List;
 public class ServicesController {
 
     private final TrackTidyService trackTidyService;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public ServicesController(TrackTidyService trackTidyService) {
         this.trackTidyService = trackTidyService;
@@ -64,7 +64,6 @@ public class ServicesController {
     @PutMapping("update/{id}")
     public ResponseEntity<TrackService> updateTidyService(
             @PathVariable("id") @NotNull String id,
-            @RequestParam("memberId") @NotNull String memberId,
             @RequestParam("memberName") @NotNull String memberName,
             @RequestParam("email") @NotNull String email,
             @RequestParam("serviceType") @NotNull String serviceType,
