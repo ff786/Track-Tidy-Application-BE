@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("user")
 @Slf4j
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;
