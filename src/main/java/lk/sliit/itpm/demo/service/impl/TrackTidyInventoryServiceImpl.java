@@ -1,7 +1,6 @@
 package lk.sliit.itpm.demo.service.impl;
 
 import lk.sliit.itpm.demo.document.TrackInventory;
-import lk.sliit.itpm.demo.document.TrackService;
 import lk.sliit.itpm.demo.dto.TidyInventoryDTO;
 import lk.sliit.itpm.demo.repository.TrackInventoryRepository;
 import lk.sliit.itpm.demo.service.TrackTidyInventoryService;
