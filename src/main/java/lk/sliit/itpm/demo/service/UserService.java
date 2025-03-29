@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserService {
 
     ResponseEntity<User> registerUser(UserDTO user);
-    ResponseEntity<User> registerAdmin(UserDTO admin);
+    //ResponseEntity<User> registerAdmin(UserDTO admin);
     UserDetailsService userDetailsService();
     TokenResponse generateToken(String email, String password);
     List<GetUserDTO> getUsers(String userType);

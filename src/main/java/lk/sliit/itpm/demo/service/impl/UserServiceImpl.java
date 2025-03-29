@@ -44,10 +44,10 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.status(HttpStatus.CREATED).body(save);
     }
 
-    @Override
+    /*@Override
     public ResponseEntity<User> registerAdmin(UserDTO admin) {
         return null;
-    }
+    }*/
 
     @Override
     public UserDetailsService userDetailsService() {
