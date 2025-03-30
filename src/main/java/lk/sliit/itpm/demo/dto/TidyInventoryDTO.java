@@ -13,8 +13,8 @@ import java.util.Date;
 @Builder
 public class TidyInventoryDTO {
 
-    private String productName;
     private String userId;
+    private String productName;
     private String productId;
     private int quantity;
     private Date purchaseDate;

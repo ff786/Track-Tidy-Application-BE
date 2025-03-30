@@ -28,6 +28,7 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
     @Override
     public TrackInventory createTidyInventory(TidyInventoryDTO inventory) {
         TrackInventory map =TrackInventory.builder()
+                .userId(inventory.getUserId())
                 .productId(inventory.getProductId())
                 .productName(inventory.getProductName())
                 .productCategory(inventory.getProductCategory())
@@ -43,12 +44,12 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
     }
 
     @Override
-    public void deleteTidyInventory(String TrackTidyId) {
-        Optional<TrackInventory> byId = trackInventoryRepository.findById(TrackTidyId);
+    public void deleteTidyInventory(String Id) {
+        Optional<TrackInventory> byId = trackInventoryRepository.findById(Id);
         if (!byId.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + TrackTidyId);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + Id);
         }
-        trackInventoryRepository.deleteById(TrackTidyId);
+        trackInventoryRepository.deleteById(Id);
     }
 
     @Override
@@ -57,10 +58,10 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
     }
 
     @Override
-    public TrackInventory updateTidyInventory(String TrackTidyId, TidyInventoryDTO inventory) {
-        Optional<TrackInventory> byId = trackInventoryRepository.findById(TrackTidyId);
+    public TrackInventory updateTidyInventory(String Id, TidyInventoryDTO inventory) {
+        Optional<TrackInventory> byId = trackInventoryRepository.findById(Id);
         if (!byId.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + TrackTidyId);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + Id);
         }
         TrackInventory trackInventory1 = byId.get();
         trackInventory1.setProductId(inventory.getProductId());
