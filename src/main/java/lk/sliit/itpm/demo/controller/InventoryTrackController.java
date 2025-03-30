@@ -37,6 +37,7 @@ public class InventoryTrackController {
             @RequestParam("productValue") @NotNull int productValue,
             @RequestParam("warrantyDate") @NotNull String warrantyDate,
             @RequestParam("productCategory") @NotNull String productCategory,
+            @RequestParam("faulted") @NotNull String faulted,
             @RequestParam("ProductImage") @NotNull MultipartFile ProductImage) throws ParseException, IOException {
 
         TidyInventoryDTO build = TidyInventoryDTO.builder()
@@ -47,6 +48,7 @@ public class InventoryTrackController {
                 .purchaseDate(dateFormat.parse(purchaseDate))
                 .productValue(productValue)
                 .warrantyDate(dateFormat.parse(warrantyDate))
+                .faulted(faulted)
                 .productCategory(productCategory)
                 .ProductImage(ProductImage.getBytes())
                 .build();
@@ -73,7 +75,7 @@ public class InventoryTrackController {
             @RequestParam("quantity") @NotNull int quantity,
             @RequestParam("productValue") @NotNull int productValue,
             @RequestParam("productCategory") @NotNull String productCategory,
-            @RequestParam("Faulted") @NotNull String Faulted,
+            @RequestParam("faulted") @NotNull String faulted,
             @RequestParam("ProductImage") @NotNull MultipartFile ProductImage) throws ParseException, IOException {
 
         TidyInventoryDTO build = TidyInventoryDTO.builder()
@@ -81,7 +83,7 @@ public class InventoryTrackController {
                 .quantity(quantity)
                 .productValue(productValue)
                 .productCategory(productCategory)
-                .Faulted(Faulted)
+                .faulted(faulted)
                 .ProductImage(ProductImage.getBytes())
                 .build();
 
