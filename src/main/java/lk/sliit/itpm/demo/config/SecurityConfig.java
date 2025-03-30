@@ -42,6 +42,7 @@ public class SecurityConfig {
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/register").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/request/token").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/inventory/create").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/user/getUsers").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/service/getAll").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/inventory/getAll").permitAll()
