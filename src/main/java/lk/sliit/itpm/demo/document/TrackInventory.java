@@ -23,7 +23,7 @@ public class TrackInventory {
     private String productId;
     private String productName;
     private String productCategory;
-    private String Faulted;
+    private String faulted;
     private int quantity;
     private Date purchaseDate;
     private Date warrantyDate;

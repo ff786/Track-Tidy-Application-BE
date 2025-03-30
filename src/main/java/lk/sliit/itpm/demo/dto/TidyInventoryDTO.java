@@ -22,6 +22,6 @@ public class TidyInventoryDTO {
     private Date warrantyDate;
     private String productCategory;
     private byte[] ProductImage;
-    private String Faulted;
+    private String faulted;
 
 }

@@ -32,7 +32,7 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
                 .productId(inventory.getProductId())
                 .productName(inventory.getProductName())
                 .productCategory(inventory.getProductCategory())
-                .Faulted(inventory.getFaulted())
+                .faulted(inventory.getFaulted())
                 .quantity(inventory.getQuantity())
                 .purchaseDate(inventory.getPurchaseDate())
                 .warrantyDate(inventory.getWarrantyDate())
