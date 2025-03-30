@@ -33,6 +33,7 @@ public class ServicesController {
             @RequestParam("memberName") @NotNull String memberName,
             @RequestParam("address") @NotNull String address,
             @RequestParam("email") @NotNull String email,
+            @RequestParam("phoneNumber") @NotNull String phoneNumber,
             @RequestParam("serviceType") @NotNull String serviceType,
             @RequestParam("serviceDesc") @NotNull String serviceDesc,
             @RequestParam("referralCode") @NotNull String referralCode ) throws ParseException, IOException {
@@ -42,6 +43,7 @@ public class ServicesController {
                 .memberName(memberName)
                 .address(address)
                 .email(email)
+                .phoneNumber(phoneNumber)
                 .serviceType(serviceType)
                 .serviceDesc(serviceDesc)
                 .referralCode(referralCode)

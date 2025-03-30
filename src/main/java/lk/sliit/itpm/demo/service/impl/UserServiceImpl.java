@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,7 +76,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<GetUserDTO> getUsers(String userType) {
-        return List.of();
+        List<GetUserDTO> getUserDTOList = new ArrayList<>();
+        if (userType.equals(Role.ADMIN.name()) || userType.equals(Role.USER.name())) {
+            userRepository.findAllByRole(Role.valueOf(userType)).stream().forEach(user -> {
+                getUserDTOList.add(GetUserDTO.builder()
+                        .id(user.getId())
+                        .firstName(user.getFirstName())
+                        .lastName(user.getLastName())
+                        .build());
+            });
+            return getUserDTOList;
+
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid user type!");
     }
 
     @Override
@@ -85,12 +98,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUSer(String id) {
-
+        Optional<User> byId = userRepository.findById(id);
+        if (!byId.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!");
+        }
+        userRepository.delete(byId.get());
     }
 
     @Override
     public User updateUser(String id, UserDTO user) {
-        return null;
+        Optional<User> byId = userRepository.findById(id);
+        if (!byId.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found!");
+        }
+        User user1 = byId.get();
+        user1.setFirstName(user.getFirstName());
+        user1.setLastName(user.getLastName());
+        user1.setPassword(user.getPassword());
+        user1.setMobileNumber(user.getMobileNumber());
+        user1.setRole(user.getRole());
+        return userRepository.save(user1);
     }
 
     @Override

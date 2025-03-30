@@ -42,8 +42,17 @@ public class SecurityConfig {
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/register").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/request/token").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/user/getUsers").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/service/getAll").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/inventory/getAll").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/inventory/update/{id}").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/inventory/delete/{id}").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/inventory/delete").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/service/delete/{id}").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/grocery/delete/{id}").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/user/delete/{id}").permitAll()
+
                                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                                .requestMatchers(HttpMethod.GET,"/service/getAll").permitAll() //Testing Purpose
 
                                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))

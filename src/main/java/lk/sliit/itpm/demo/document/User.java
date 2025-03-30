@@ -33,7 +33,6 @@ public class User implements UserDetails {
     private String password;
     private String mobileNumber;
     private Role role;
-    // private Boolean isActivated;
     private Boolean isEmailVerified;
     private Boolean isMFAEnabled;
 
@@ -67,11 +66,6 @@ public class User implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
-    /* @Override
-    public boolean isEnabled() {
-        return isActivated;
-    } */
 
 
 }

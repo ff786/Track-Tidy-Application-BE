@@ -8,9 +8,9 @@ import java.util.List;
 public interface TrackTidyInventoryService {
 
     TrackInventory createTidyInventory(TidyInventoryDTO inventory);
-    void deleteTidyInventory(String TrackTidyId);
+    void deleteTidyInventory(String TrackId);
     List<TrackInventory> getAllTidyInventory();
-    TrackInventory updateTidyInventory(String TrackTidyId, TidyInventoryDTO inventory);
+    TrackInventory updateTidyInventory(String TrackId, TidyInventoryDTO inventory);
     //void approveTidyInventory(String id);
 
 }

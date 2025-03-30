@@ -1,6 +1,7 @@
 package lk.sliit.itpm.demo.dto;
 
 import jakarta.validation.constraints.NotNull;
+import lk.sliit.itpm.demo.util.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,8 @@ public class UserDTO {
     private String lastName;
     @NotNull
     private String mobileNumber;
+
+    private Role role;
 
 }
 
