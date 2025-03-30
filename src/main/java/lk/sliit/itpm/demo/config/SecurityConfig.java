@@ -47,6 +47,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/service/getAll").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/inventory/getAll").permitAll()
                                 .requestMatchers(HttpMethod.PUT,"/inventory/update/{id}").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/inventory/update").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/inventory/delete/{id}").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/inventory/delete").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/service/delete/{id}").permitAll()
