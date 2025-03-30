@@ -44,12 +44,12 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
     }
 
     @Override
-    public void deleteTidyInventory(String Id) {
-        Optional<TrackInventory> byId = trackInventoryRepository.findById(Id);
+    public void deleteTidyInventory(String id) {
+        Optional<TrackInventory> byId = trackInventoryRepository.findById(id);
         if (!byId.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + Id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + id);
         }
-        trackInventoryRepository.deleteById(Id);
+        trackInventoryRepository.deleteById(id);
     }
 
     @Override
@@ -58,10 +58,10 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
     }
 
     @Override
-    public TrackInventory updateTidyInventory(String Id, TidyInventoryDTO inventory) {
-        Optional<TrackInventory> byId = trackInventoryRepository.findById(Id);
+    public TrackInventory updateTidyInventory(String id, TidyInventoryDTO inventory) {
+        Optional<TrackInventory> byId = trackInventoryRepository.findById(id);
         if (!byId.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + Id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + id);
         }
         TrackInventory trackInventory1 = byId.get();
         trackInventory1.setProductId(inventory.getProductId());
