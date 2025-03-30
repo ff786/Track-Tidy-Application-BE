@@ -31,9 +31,9 @@ public class GroceryTrackController {
 
     @PostMapping("create")
     public ResponseEntity<TrackGrocery> createTidyGrocery(
+            @RequestParam("memberId") @NotNull String memberId,
             @RequestParam("itemName") @NotNull String itemName,
             @RequestParam("price") @NotNull int price,
-            @RequestParam("memberId") @NotNull String memberId,
             @RequestParam("phoneNumber") @NotNull String phoneNumber,
             @RequestParam("purchaseDate") @NotNull String purchaseDate,
             @RequestParam("expiryDate") @NotNull String expiryDate,
