@@ -1,11 +1,14 @@
 package lk.sliit.itpm.demo.service.impl;
 
+import lk.sliit.itpm.demo.document.SMSOTP;
 import lk.sliit.itpm.demo.document.User;
 import lk.sliit.itpm.demo.dto.GetUserDTO;
 import lk.sliit.itpm.demo.dto.TokenResponse;
 import lk.sliit.itpm.demo.dto.UserDTO;
+import lk.sliit.itpm.demo.repository.SMSRepository;
 import lk.sliit.itpm.demo.repository.UserRepository;
 import lk.sliit.itpm.demo.service.UserService;
+import lk.sliit.itpm.demo.util.EmailSender;
 import lk.sliit.itpm.demo.util.JWTService;
 import lk.sliit.itpm.demo.util.Role;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @Slf4j
@@ -28,11 +32,19 @@ public class UserServiceImpl implements UserService {
 
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+    private final SMSRepository smsRepository;
+
     private final JWTService jwtService;
 
-    public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository, JWTService jwtService) {
+    private final EmailSender emailSender;
+
+    private static final Random random = new Random();
+
+    public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository, SMSRepository smsRepository, EmailSender emailSender, JWTService jwtService, EmailSender emailSender1) {
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
+        this.emailSender = emailSender;
+        this.smsRepository = smsRepository;
         this.jwtService = jwtService;
     }
 
@@ -122,6 +134,40 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void requestOTP(String email, String password) {
-
+        Optional<User> byEmailAndPassword = userRepository.findByEmailAndPassword(email, password);
+        if (!byEmailAndPassword.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid User!");
+        }
+        sendOTP(otpGenerator(), byEmailAndPassword.get());
     }
+
+    private String otpGenerator() {
+        return String.valueOf(random.nextInt(900000) + 100000); // generates a 6-digit OTP
+    }
+
+    private void sendOTP(String otp, User user) {
+        SMSOTP byEmail = smsRepository.findByEmail(user.getEmail());
+        long expiry = System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30; // 30 days
+
+        if (byEmail != null) {
+            byEmail.setOtp(otp);
+            byEmail.setExp(expiry);
+            smsRepository.save(byEmail);
+        } else {
+            smsRepository.save(SMSOTP.builder()
+                    .email(user.getEmail())
+                    .otp(otp)
+                    .exp(expiry)
+                    .build());
+        }
+
+        // Send OTP to email
+        emailSender.sendEmail(
+                user.getEmail(),
+                "Your OTP Code",
+                "Dear " + user.getFirstName() + ",\n\nYour OTP is: " + otp + "\n\nIt will expire in 30 days.\n\nRegards,\nYour App Team"
+        );
+    }
+
+
 }

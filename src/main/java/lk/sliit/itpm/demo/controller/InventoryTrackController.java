@@ -37,7 +37,7 @@ public class InventoryTrackController {
             @RequestParam("productValue") @NotNull int productValue,
             @RequestParam("warrantyDate") @NotNull String warrantyDate,
             @RequestParam("productCategory") @NotNull String productCategory,
-            @RequestParam("faulted") @NotNull String faulted,
+            @RequestParam("Faulted") @NotNull String Faulted,
             @RequestParam("ProductImage") @NotNull MultipartFile ProductImage) throws ParseException, IOException {
 
         TidyInventoryDTO build = TidyInventoryDTO.builder()
@@ -48,7 +48,7 @@ public class InventoryTrackController {
                 .purchaseDate(dateFormat.parse(purchaseDate))
                 .productValue(productValue)
                 .warrantyDate(dateFormat.parse(warrantyDate))
-                .faulted(faulted)
+                .faulted(Faulted)
                 .productCategory(productCategory)
                 .ProductImage(ProductImage.getBytes())
                 .build();

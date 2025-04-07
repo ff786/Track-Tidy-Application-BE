@@ -51,6 +51,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE,"/inventory/delete/{id}").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/inventory/delete").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/service/delete/{id}").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/service/delete").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/grocery/delete/{id}").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/user/delete/{id}").permitAll()
 
