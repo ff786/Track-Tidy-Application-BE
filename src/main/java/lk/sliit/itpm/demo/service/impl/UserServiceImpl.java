@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService {
 
     private void sendOTP(String otp, User user) {
         SMSOTP byEmail = smsRepository.findByEmail(user.getEmail());
-        long expiry = System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30; // 30 days
+        long expiry = System.currentTimeMillis() + 1000L * 60 * 60 * 24; // 24 hours
 
         if (byEmail != null) {
             byEmail.setOtp(otp);
@@ -160,12 +160,11 @@ public class UserServiceImpl implements UserService {
                     .exp(expiry)
                     .build());
         }
-
         // Send OTP to email
         emailSender.sendEmail(
                 user.getEmail(),
                 "Your OTP Code",
-                "Dear " + user.getFirstName() + ",\n\nYour OTP is: " + otp + "\n\nIt will expire in 30 days.\n\nRegards,\nYour App Team"
+                "Dear " + user.getFirstName() + ",\n\nYour OTP is: " + otp + "\n\nIt will expire in 24 hours.\n\nRegards,\nYour App Team"
         );
     }
 
