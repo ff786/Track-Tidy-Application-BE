@@ -30,15 +30,15 @@ import java.util.Random;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-    private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final SMSRepository smsRepository;
 
     private final JWTService jwtService;
 
     private final EmailSender emailSender;
-
+    private final ModelMapper modelMapper;
     private static final Random random = new Random();
+
 
     public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository, SMSRepository smsRepository, EmailSender emailSender, JWTService jwtService, EmailSender emailSender1) {
         this.modelMapper = modelMapper;
@@ -57,10 +57,10 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.status(HttpStatus.CREATED).body(save);
     }
 
-    /*@Override
+    @Override
     public ResponseEntity<User> registerAdmin(UserDTO admin) {
         return null;
-    }*/
+    }
 
     @Override
     public UserDetailsService userDetailsService() {

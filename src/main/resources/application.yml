@@ -10,7 +10,17 @@ spring:
     mongodb:
       uri: mongodb+srv://projectITPM:ITPM123@farsithitpm.7aoob.mongodb.net/
       database: track-tidy
-
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: tracktidy1@gmail.com
+    password: nezz xuvw gsze wtae
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 token:
   signing:

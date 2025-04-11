@@ -46,6 +46,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/user/getUsers").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/service/getAll").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/inventory/getAll").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/spring-ai/prompt").permitAll() //Test Message
+                                .requestMatchers(HttpMethod.GET,"/track-ai/tracktidy-package").permitAll()
                                 .requestMatchers(HttpMethod.PUT,"/inventory/update/{id}").permitAll()
                                 .requestMatchers(HttpMethod.PUT,"/inventory/update").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/inventory/delete/{id}").permitAll()

@@ -44,4 +44,9 @@ public class UserController {
         return userService.getUsers(userType);
     }
 
+    @PostMapping("otp/request")
+    public void requestOTP(@RequestBody JsonNode jsonNode) {
+        userService.requestOTP(jsonNode.get("email").asText(), jsonNode.get("password").asText());
+    }
+
 }
