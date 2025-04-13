@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     private static final Random random = new Random();
 
 
-    public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository, SMSRepository smsRepository, EmailSender emailSender, JWTService jwtService, EmailSender emailSender1) {
+    public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository, SMSRepository smsRepository, EmailSender emailSender, JWTService jwtService) {
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.emailSender = emailSender;
