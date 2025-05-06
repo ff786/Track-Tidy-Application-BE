@@ -32,10 +32,8 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
                 .productId(inventory.getProductId())
                 .productName(inventory.getProductName())
                 .productCategory(inventory.getProductCategory())
-                .faulted(inventory.getFaulted())
                 .quantity(inventory.getQuantity())
-                .purchaseDate(inventory.getPurchaseDate())
-                .warrantyDate(inventory.getWarrantyDate())
+                .WarrantyPeriod(inventory.getWarrantyPeriod())
                 .productValue(inventory.getProductValue())
                 .ProductImage(inventory.getProductImage())
                 .build();
@@ -64,13 +62,11 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + id);
         }
         TrackInventory trackInventory1 = byId.get();
-        trackInventory1.setProductId(inventory.getProductId());
         trackInventory1.setProductName(inventory.getProductName());
+        trackInventory1.setProductId(inventory.getProductId());
         trackInventory1.setProductCategory(inventory.getProductCategory());
-        trackInventory1.setFaulted(inventory.getFaulted());
         trackInventory1.setQuantity(inventory.getQuantity());
-        trackInventory1.setPurchaseDate(inventory.getPurchaseDate());
-        trackInventory1.setWarrantyDate(inventory.getWarrantyDate());
+        trackInventory1.setWarrantyPeriod(inventory.getWarrantyPeriod());
         trackInventory1.setProductValue(inventory.getProductValue());
         trackInventory1.setProductImage(inventory.getProductImage());
 

@@ -1,5 +1,6 @@
 package lk.sliit.itpm.demo.controller;
 
+import com.mongodb.lang.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lk.sliit.itpm.demo.document.TrackGrocery;
 import lk.sliit.itpm.demo.dto.TidyGroceryDTO;
@@ -28,24 +29,23 @@ public class GroceryTrackController {
     }
 
 
-
     @PostMapping("create")
     public ResponseEntity<TrackGrocery> createTidyGrocery(
-            @RequestParam("memberId") @NotNull String memberId,
+            @RequestParam("memberId") @Nullable String memberId,
             @RequestParam("itemName") @NotNull String itemName,
+            @RequestParam("productId") @NotNull String productId,
+            @RequestParam("quantity") @NotNull int quantity,
             @RequestParam("price") @NotNull int price,
-            @RequestParam("phoneNumber") @NotNull String phoneNumber,
-            @RequestParam("purchaseDate") @NotNull String purchaseDate,
             @RequestParam("expiryDate") @NotNull String expiryDate,
             @RequestParam("itemImage") @NotNull MultipartFile itemImage) throws ParseException, IOException {
 
         TidyGroceryDTO build = TidyGroceryDTO.builder()
                 .itemName(itemName)
                 .memberId(memberId)
+                .productId(productId)
+                .quantity(quantity)
                 .price(price)
-                .purchaseDate(dateFormat.parse(purchaseDate))
                 .expiryDate(dateFormat.parse(expiryDate))
-                .phoneNumber(phoneNumber)
                 .itemImage(itemImage.getBytes())
                 .build();
 
@@ -68,7 +68,8 @@ public class GroceryTrackController {
             @PathVariable("id") @NotNull String id,
             @RequestParam("itemName") @NotNull String itemName,
             @RequestParam("memberId") @NotNull String memberId,
-            @RequestParam("phoneNumber") @NotNull String phoneNumber,
+            @RequestParam("productId") @NotNull String productId,
+            @RequestParam("quantity") @NotNull int quantity,
             @RequestParam("price") @NotNull int price,
             @RequestParam("itemImage") MultipartFile itemImage) throws ParseException, IOException {
 
@@ -76,7 +77,8 @@ public class GroceryTrackController {
                 .itemName(itemName)
                 .memberId(memberId)
                 .memberId(memberId)
-                .phoneNumber(phoneNumber)
+                .productId(productId)
+                .quantity(quantity)
                 .price(price)
                 .itemImage(itemImage.getBytes())
                 .build();

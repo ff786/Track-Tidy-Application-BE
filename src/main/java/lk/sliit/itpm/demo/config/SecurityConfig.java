@@ -42,22 +42,30 @@ public class SecurityConfig {
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/register").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/request/token").permitAll()
-                                .requestMatchers(HttpMethod.POST,"/inventory/create").permitAll()
-                                .requestMatchers(HttpMethod.POST,"/service/create").permitAll()
-                                .requestMatchers(HttpMethod.POST,"/grocery/create").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/user/getUsers").permitAll()
-                                .requestMatchers(HttpMethod.GET,"/service/getAll").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/admin/getAll").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/user/delete/{id}").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/otp/request").permitAll() //Complete User
+                                .requestMatchers(HttpMethod.POST,"/inventory/create").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/inventory/getAll").permitAll()
-                                .requestMatchers(HttpMethod.GET,"/spring-ai/prompt").permitAll() //Test Message
-                                .requestMatchers(HttpMethod.GET,"/track-ai/tracktidy-package").permitAll()
                                 .requestMatchers(HttpMethod.PUT,"/inventory/update/{id}").permitAll()
                                 .requestMatchers(HttpMethod.PUT,"/inventory/update").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/inventory/delete/{id}").permitAll()
-                                .requestMatchers(HttpMethod.DELETE,"/inventory/delete").permitAll()
-                                .requestMatchers(HttpMethod.DELETE,"/service/delete/{id}").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/inventory/delete").permitAll() //Complete Inventory
+                                .requestMatchers(HttpMethod.POST,"/service/create").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/service/getAll").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/service/update").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/service/update/{id}").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/service/delete").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/service/delete/{id}").permitAll() //Complete Service
+                                .requestMatchers(HttpMethod.POST,"/grocery/create").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/grocery/getAll").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/grocery/update").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/grocery/update/{id}").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/grocery/delete").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/grocery/delete/{id}").permitAll()
-                                .requestMatchers(HttpMethod.DELETE,"/user/delete/{id}").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/spring-ai/prompt").permitAll() //Test Message
+                                .requestMatchers(HttpMethod.GET,"/track-ai/tracktidy-package").permitAll()
 
                                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 

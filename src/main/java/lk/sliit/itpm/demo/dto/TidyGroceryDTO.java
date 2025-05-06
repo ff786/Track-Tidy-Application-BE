@@ -17,9 +17,9 @@ public class TidyGroceryDTO {
     private String id;
     private String itemName;
     private String memberId;
-    private String phoneNumber;
+    private String productId;
+    private int quantity;
     private int price;
-    private Date purchaseDate;
     private Date expiryDate;
     private byte[] itemImage;
     private User approvedBy;

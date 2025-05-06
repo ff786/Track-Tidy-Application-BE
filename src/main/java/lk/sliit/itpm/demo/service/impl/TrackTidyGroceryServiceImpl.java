@@ -29,11 +29,10 @@ public class TrackTidyGroceryServiceImpl implements TrackTidyGroceryService {
     public TrackGrocery createTidyGrocery(TidyGroceryDTO grocery) {
 
         TrackGrocery map =TrackGrocery.builder()
-                .memberId(grocery.getMemberId())
                 .itemName(grocery.getItemName())
-                .phoneNumber(grocery.getPhoneNumber())
+                .productId(grocery.getProductId())
+                .price(grocery.getQuantity())
                 .price(grocery.getPrice())
-                .purchaseDate(grocery.getPurchaseDate())
                 .expiryDate(grocery.getExpiryDate())
                 .itemImage(grocery.getItemImage())
                 .build();
@@ -64,9 +63,9 @@ public class TrackTidyGroceryServiceImpl implements TrackTidyGroceryService {
         }
         TrackGrocery trackGrocery1 = byId.get();
         trackGrocery1.setItemName(grocery.getItemName());
-        trackGrocery1.setPhoneNumber(grocery.getPhoneNumber());
+        trackGrocery1.setProductId(grocery.getProductId());
+        trackGrocery1.setQuantity(grocery.getQuantity());
         trackGrocery1.setPrice(grocery.getPrice());
-        trackGrocery1.setPurchaseDate(grocery.getPurchaseDate());
         trackGrocery1.setExpiryDate(grocery.getExpiryDate());
         trackGrocery1.setItemImage(grocery.getItemImage());
 

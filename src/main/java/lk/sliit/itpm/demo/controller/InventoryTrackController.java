@@ -30,25 +30,19 @@ public class InventoryTrackController {
     @PostMapping("create")
     public ResponseEntity<TrackInventory> createTidyInventory(
             @RequestParam("productName") @NotNull String productName,
-            @RequestParam("userId") @NotNull String userId,
             @RequestParam("productId") @NotNull String productId,
             @RequestParam("quantity") @NotNull int quantity,
-            @RequestParam("purchaseDate") @NotNull String purchaseDate,
+            @RequestParam("WarrantyPeriod") @NotNull int WarrantyPeriod,
             @RequestParam("productValue") @NotNull int productValue,
-            @RequestParam("warrantyDate") @NotNull String warrantyDate,
             @RequestParam("productCategory") @NotNull String productCategory,
-            @RequestParam("Faulted") @NotNull String Faulted,
             @RequestParam("ProductImage") @NotNull MultipartFile ProductImage) throws ParseException, IOException {
 
         TidyInventoryDTO build = TidyInventoryDTO.builder()
                 .productName(productName)
-                .userId(userId)
                 .productId(productId)
                 .quantity(quantity)
-                .purchaseDate(dateFormat.parse(purchaseDate))
+                .WarrantyPeriod(WarrantyPeriod)
                 .productValue(productValue)
-                .warrantyDate(dateFormat.parse(warrantyDate))
-                .faulted(Faulted)
                 .productCategory(productCategory)
                 .ProductImage(ProductImage.getBytes())
                 .build();
@@ -71,6 +65,7 @@ public class InventoryTrackController {
     @PutMapping("update/{id}")
     public ResponseEntity<TrackInventory> updateTidyInventory(
             @PathVariable("id") @NotNull String id,
+            @RequestParam("productName") @NotNull String productName,
             @RequestParam("productId") @NotNull String productId,
             @RequestParam("quantity") @NotNull int quantity,
             @RequestParam("productValue") @NotNull int productValue,
@@ -79,6 +74,7 @@ public class InventoryTrackController {
             @RequestParam("ProductImage") @NotNull MultipartFile ProductImage) throws ParseException, IOException {
 
         TidyInventoryDTO build = TidyInventoryDTO.builder()
+                .productName(productName)
                 .productId(productId)
                 .quantity(quantity)
                 .productValue(productValue)

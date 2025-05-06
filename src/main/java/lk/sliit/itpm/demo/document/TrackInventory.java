@@ -25,7 +25,7 @@ public class TrackInventory {
     private String productCategory;
     private String faulted;
     private int quantity;
-    private Date purchaseDate;
+    private int WarrantyPeriod;
     private Date warrantyDate;
     private int productValue;
     private byte[] ProductImage;

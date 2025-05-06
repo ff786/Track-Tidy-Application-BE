@@ -17,7 +17,7 @@ public class TidyInventoryDTO {
     private String productName;
     private String productId;
     private int quantity;
-    private Date purchaseDate;
+    private int WarrantyPeriod;
     private int productValue;
     private Date warrantyDate;
     private String productCategory;
