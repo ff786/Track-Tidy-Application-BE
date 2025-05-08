@@ -28,7 +28,6 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
     @Override
     public TrackInventory createTidyInventory(TidyInventoryDTO inventory) {
         TrackInventory map =TrackInventory.builder()
-                .userId(inventory.getUserId())
                 .productId(inventory.getProductId())
                 .productName(inventory.getProductName())
                 .productCategory(inventory.getProductCategory())

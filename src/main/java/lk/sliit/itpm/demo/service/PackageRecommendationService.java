@@ -1,7 +1,6 @@
 package lk.sliit.itpm.demo.service;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -22,8 +21,8 @@ public class PackageRecommendationService {
 
     private final RestTemplate restTemplate;
 
-    public PackageRecommendationService(RestTemplateBuilder builder) {
-        this.restTemplate = builder.build();
+    public PackageRecommendationService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     public String generatePackage(String codeSnippet) {

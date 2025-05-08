@@ -31,7 +31,6 @@ public class InventoryTrackController {
 
     @PostMapping("create")
     public ResponseEntity<TrackInventory> createTidyInventory(
-            @AuthenticationPrincipal User user,
             @RequestParam("productName") @NotNull String productName,
             @RequestParam("productId") @NotNull String productId,
             @RequestParam("quantity") @NotNull int quantity,
@@ -41,7 +40,6 @@ public class InventoryTrackController {
             @RequestParam("ProductImage") @NotNull MultipartFile ProductImage) throws ParseException, IOException {
 
         TidyInventoryDTO build = TidyInventoryDTO.builder()
-                .userId(user.getEmail())
                 .productName(productName)
                 .productId(productId)
                 .quantity(quantity)

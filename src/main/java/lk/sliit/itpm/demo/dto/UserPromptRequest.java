@@ -7,7 +7,7 @@ public class UserPromptRequest {
         return codeSnippet;
     }
 
-    public void setgetUserPromptRequest(String codeSnippet) {
+    public void setUserPromptRequest(String codeSnippet) {
         this.codeSnippet = codeSnippet;
     }
 }
