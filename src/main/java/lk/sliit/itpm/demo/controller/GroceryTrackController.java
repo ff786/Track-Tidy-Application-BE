@@ -33,7 +33,6 @@ public class GroceryTrackController {
 
     @PostMapping("create")
     public ResponseEntity<TrackGrocery> createTidyGrocery(
-            @AuthenticationPrincipal User user,
             @RequestParam("itemName") @NotNull String itemName,
             @RequestParam("productId") @NotNull String productId,
             @RequestParam("quantity") @NotNull int quantity,
@@ -42,7 +41,6 @@ public class GroceryTrackController {
             @RequestParam("itemImage") @NotNull MultipartFile itemImage) throws ParseException, IOException {
 
         TidyGroceryDTO build = TidyGroceryDTO.builder()
-                .userId(user.getEmail())
                 .itemName(itemName)
                 .productId(productId)
                 .quantity(quantity)
