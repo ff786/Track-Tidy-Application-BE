@@ -2,10 +2,12 @@ package lk.sliit.itpm.demo.controller;
 
 import jakarta.validation.constraints.NotNull;
 import lk.sliit.itpm.demo.document.TrackInventory;
+import lk.sliit.itpm.demo.document.User;
 import lk.sliit.itpm.demo.dto.TidyInventoryDTO;
 import lk.sliit.itpm.demo.service.TrackTidyInventoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +31,7 @@ public class InventoryTrackController {
 
     @PostMapping("create")
     public ResponseEntity<TrackInventory> createTidyInventory(
+            @AuthenticationPrincipal User user,
             @RequestParam("productName") @NotNull String productName,
             @RequestParam("productId") @NotNull String productId,
             @RequestParam("quantity") @NotNull int quantity,
@@ -38,6 +41,7 @@ public class InventoryTrackController {
             @RequestParam("ProductImage") @NotNull MultipartFile ProductImage) throws ParseException, IOException {
 
         TidyInventoryDTO build = TidyInventoryDTO.builder()
+                .userId(user.getEmail())
                 .productName(productName)
                 .productId(productId)
                 .quantity(quantity)

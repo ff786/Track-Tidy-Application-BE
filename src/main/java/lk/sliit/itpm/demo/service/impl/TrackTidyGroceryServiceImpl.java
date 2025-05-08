@@ -29,6 +29,7 @@ public class TrackTidyGroceryServiceImpl implements TrackTidyGroceryService {
     public TrackGrocery createTidyGrocery(TidyGroceryDTO grocery) {
 
         TrackGrocery map =TrackGrocery.builder()
+                .userId(grocery.getUserId())
                 .itemName(grocery.getItemName())
                 .productId(grocery.getProductId())
                 .price(grocery.getQuantity())

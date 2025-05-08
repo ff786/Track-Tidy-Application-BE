@@ -30,7 +30,7 @@ public class TrackTidyServiceImpl implements TrackTidyService {
     public TrackService createTidyService(TidyServiceDTO service) {
 
         TrackService map =TrackService.builder()
-                .memberId(service.getMemberId())
+                .userId(service.getUserId())
                 .memberName(service.getMemberName())
                 .address(service.getAddress())
                 .email(service.getEmail())

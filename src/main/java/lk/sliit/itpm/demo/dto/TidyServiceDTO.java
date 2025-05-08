@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class TidyServiceDTO {
 
+    private String userId;
     private String serviceType;
     private String serviceDesc;
-    private String memberId;
     private String memberName;
     private String address;
     private String email;

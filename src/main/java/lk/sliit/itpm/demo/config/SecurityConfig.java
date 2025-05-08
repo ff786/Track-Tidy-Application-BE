@@ -63,9 +63,12 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PUT,"/grocery/update").permitAll()
                                 .requestMatchers(HttpMethod.PUT,"/grocery/update/{id}").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/grocery/delete").permitAll()
-                                .requestMatchers(HttpMethod.DELETE,"/grocery/delete/{id}").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/grocery/delete/{id}").permitAll()//Complete Grocery
+                                .requestMatchers(HttpMethod.POST,"/package/create").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/package/getAll").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/spring-ai/prompt").permitAll() //Test Message
-                                .requestMatchers(HttpMethod.GET,"/track-ai/tracktidy-package").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/track-ai/generate-package").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/track-ai/generate-package").permitAll()
 
                                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 

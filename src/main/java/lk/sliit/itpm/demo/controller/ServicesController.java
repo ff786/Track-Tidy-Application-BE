@@ -1,12 +1,13 @@
 package lk.sliit.itpm.demo.controller;
 
-
 import jakarta.validation.constraints.NotNull;
 import lk.sliit.itpm.demo.document.TrackService;
+import lk.sliit.itpm.demo.document.User;
 import lk.sliit.itpm.demo.dto.TidyServiceDTO;
 import lk.sliit.itpm.demo.service.TrackTidyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class ServicesController {
 
     @PostMapping("create")
     public ResponseEntity<TrackService> createTidyService(
-            @RequestParam("memberId") @NotNull String memberId,
+            @AuthenticationPrincipal User user,
             @RequestParam("memberName") @NotNull String memberName,
             @RequestParam("address") @NotNull String address,
             @RequestParam("email") @NotNull String email,
@@ -39,7 +40,7 @@ public class ServicesController {
             @RequestParam("referralCode") @NotNull String referralCode ) throws ParseException, IOException {
 
         TidyServiceDTO build = TidyServiceDTO.builder()
-                .memberId(memberId)
+                .userId(user.getEmail())
                 .memberName(memberName)
                 .address(address)
                 .email(email)
