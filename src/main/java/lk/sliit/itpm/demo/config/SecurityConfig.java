@@ -69,11 +69,12 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST,"/package/create").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/package/getAll").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/spring-ai/prompt").permitAll() //Test Message
+                                .requestMatchers(HttpMethod.GET,"/track-ai/tracktidy-package").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/email/send").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/track-ai/generate-package").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/track-ai/generate-package").permitAll()
 
                                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-
                                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
