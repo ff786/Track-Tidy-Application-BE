@@ -13,15 +13,16 @@ import java.util.Date;
 @Builder
 public class TidyInventoryDTO {
 
+    private String id;
     private String userId;
     private String productName;
     private String productId;
     private int quantity;
     private int WarrantyPeriod;
     private int productValue;
-    private Date warrantyDate;
     private String productCategory;
     private byte[] ProductImage;
+    private String productImageBase64;
     private String faulted;
 
 }

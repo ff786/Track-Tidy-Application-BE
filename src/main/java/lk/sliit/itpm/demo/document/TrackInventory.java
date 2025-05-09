@@ -19,7 +19,6 @@ public class TrackInventory {
 
     @Id
     private String id;
-    private String userId;
     private String productId;
     private String productName;
     private String productCategory;

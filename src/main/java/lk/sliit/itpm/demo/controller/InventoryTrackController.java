@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -43,7 +44,7 @@ public class InventoryTrackController {
                 .WarrantyPeriod(WarrantyPeriod)
                 .productValue(productValue)
                 .productCategory(productCategory)
-                .ProductImage(ProductImage.getBytes())
+                .productImageBase64(Arrays.toString(ProductImage.getBytes()))
                 .build();
 
         return ResponseEntity.status(201).body(trackTidyInventoryService.createTidyInventory(build));
@@ -77,7 +78,7 @@ public class InventoryTrackController {
                 .quantity(quantity)
                 .productValue(productValue)
                 .productCategory(productCategory)
-                .ProductImage(ProductImage.getBytes())
+                .productImageBase64(Arrays.toString(ProductImage.getBytes()))
                 .build();
 
         return ResponseEntity.status(201).body(trackTidyInventoryService.updateTidyInventory(id, build));

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("inventory/request")
@@ -44,7 +45,7 @@ public class InventoryRequestController {
                 .WarrantyPeriod(WarrantyPeriod)
                 .productValue(productValue)
                 .productCategory(productCategory)
-                .ProductImage(ProductImage.getBytes())
+                .productImageBase64(Arrays.toString(ProductImage.getBytes()))
                 .build();
 
         return ResponseEntity.status(201).body(trackTidyInventoryService.createTidyInventory(build));

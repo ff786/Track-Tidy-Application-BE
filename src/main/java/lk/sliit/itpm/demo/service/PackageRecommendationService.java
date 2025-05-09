@@ -68,7 +68,7 @@ public class PackageRecommendationService {
         Map<String, Object> messageUser = Map.of("role", "user", "content", prompt);
 
         Map<String, Object> request = Map.of(
-                "model", "gpt-4",
+                "model", "gpt-4o",
                 "messages", List.of(messageSystem, messageUser),
                 "max_tokens", 500,
                 "temperature", 0.5,

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class TrackInventoryResponseDTO {
+
     private String id;
     private String productId;
     private String productName;

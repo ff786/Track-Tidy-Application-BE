@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService {
 
     private final ModelMapper modelMapper;
@@ -31,13 +29,14 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
     @Override
     public TrackInventory createTidyInventory(TidyInventoryDTO inventory) {
         TrackInventory map =TrackInventory.builder()
+                .id(inventory.getId())
                 .productId(inventory.getProductId())
                 .productName(inventory.getProductName())
                 .productCategory(inventory.getProductCategory())
                 .quantity(inventory.getQuantity())
                 .WarrantyPeriod(inventory.getWarrantyPeriod())
                 .productValue(inventory.getProductValue())
-                .ProductImage(inventory.getProductImage())
+                .ProductImage(inventory.getProductImageBase64().getBytes())
                 .build();
 
         return trackInventoryRepository.save(map);
@@ -88,7 +87,7 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
         trackInventory1.setQuantity(inventory.getQuantity());
         trackInventory1.setWarrantyPeriod(inventory.getWarrantyPeriod());
         trackInventory1.setProductValue(inventory.getProductValue());
-        trackInventory1.setProductImage(inventory.getProductImage());
+        trackInventory1.setProductImage(inventory.getProductImageBase64().getBytes());
 
         return trackInventoryRepository.save(trackInventory1);
     }
