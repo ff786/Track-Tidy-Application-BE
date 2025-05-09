@@ -67,7 +67,6 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
                     .productValue(item.getProductValue())
                     .WarrantyPeriod(item.getWarrantyPeriod())
                     .quantity(item.getQuantity())
-                    .faulted(item.getFaulted())
                     .productImageBase64(base64Image)
                     .build();
         }).toList();
@@ -76,6 +75,7 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
 
     @Override
     public TrackInventory updateTidyInventory(String id, TidyInventoryDTO inventory) {
+
         Optional<TrackInventory> byId = trackInventoryRepository.findById(id);
         if (!byId.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + id);
