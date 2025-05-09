@@ -2,12 +2,14 @@ package lk.sliit.itpm.demo.service.impl;
 
 import lk.sliit.itpm.demo.document.TrackInventory;
 import lk.sliit.itpm.demo.dto.TidyInventoryDTO;
+import lk.sliit.itpm.demo.dto.TrackInventoryResponseDTO;
 import lk.sliit.itpm.demo.repository.TrackInventoryRepository;
 import lk.sliit.itpm.demo.service.TrackTidyInventoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService {
 
     private final ModelMapper modelMapper;
@@ -50,9 +53,27 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
     }
 
     @Override
-    public List<TrackInventory> getAllTidyInventory() {
-        return trackInventoryRepository.findAll();
+    public List<TrackInventoryResponseDTO> getAllTidyInventory() {
+        List<TrackInventory> inventoryList = trackInventoryRepository.findAll();
+        return inventoryList.stream().map(item -> {
+            String base64Image = item.getProductImage() != null
+                    ? "data:image/jpeg;base64," + java.util.Base64.getEncoder().encodeToString(item.getProductImage())
+                    : null;
+
+            return TrackInventoryResponseDTO.builder()
+                    .id(item.getId())
+                    .productId(item.getProductId())
+                    .productName(item.getProductName())
+                    .productCategory(item.getProductCategory())
+                    .productValue(item.getProductValue())
+                    .WarrantyPeriod(item.getWarrantyPeriod())
+                    .quantity(item.getQuantity())
+                    .faulted(item.getFaulted())
+                    .productImageBase64(base64Image)
+                    .build();
+        }).toList();
     }
+
 
     @Override
     public TrackInventory updateTidyInventory(String id, TidyInventoryDTO inventory) {
