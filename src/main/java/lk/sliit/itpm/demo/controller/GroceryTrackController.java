@@ -3,10 +3,12 @@ package lk.sliit.itpm.demo.controller;
 import com.mongodb.lang.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lk.sliit.itpm.demo.document.TrackGrocery;
+import lk.sliit.itpm.demo.document.User;
 import lk.sliit.itpm.demo.dto.TidyGroceryDTO;
 import lk.sliit.itpm.demo.service.TrackTidyGroceryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,7 +33,6 @@ public class GroceryTrackController {
 
     @PostMapping("create")
     public ResponseEntity<TrackGrocery> createTidyGrocery(
-            @RequestParam("memberId") @Nullable String memberId,
             @RequestParam("itemName") @NotNull String itemName,
             @RequestParam("productId") @NotNull String productId,
             @RequestParam("quantity") @NotNull int quantity,
@@ -41,7 +42,6 @@ public class GroceryTrackController {
 
         TidyGroceryDTO build = TidyGroceryDTO.builder()
                 .itemName(itemName)
-                .memberId(memberId)
                 .productId(productId)
                 .quantity(quantity)
                 .price(price)
@@ -66,8 +66,8 @@ public class GroceryTrackController {
     @PutMapping("update/{id}")
     public ResponseEntity<TrackGrocery> updateTidyGrocery(
             @PathVariable("id") @NotNull String id,
+            @AuthenticationPrincipal User user,
             @RequestParam("itemName") @NotNull String itemName,
-            @RequestParam("memberId") @NotNull String memberId,
             @RequestParam("productId") @NotNull String productId,
             @RequestParam("quantity") @NotNull int quantity,
             @RequestParam("price") @NotNull int price,
@@ -75,8 +75,7 @@ public class GroceryTrackController {
 
         TidyGroceryDTO build = TidyGroceryDTO.builder()
                 .itemName(itemName)
-                .memberId(memberId)
-                .memberId(memberId)
+                .userId(user.getEmail())
                 .productId(productId)
                 .quantity(quantity)
                 .price(price)

@@ -21,6 +21,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.List;
+
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -34,7 +36,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.cors(AbstractHttpConfigurer::disable);
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->
@@ -63,10 +65,15 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PUT,"/grocery/update").permitAll()
                                 .requestMatchers(HttpMethod.PUT,"/grocery/update/{id}").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/grocery/delete").permitAll()
-                                .requestMatchers(HttpMethod.DELETE,"/grocery/delete/{id}").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/grocery/delete/{id}").permitAll()//Complete Grocery
+                                .requestMatchers(HttpMethod.POST,"/package/create").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/package/getAll").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/spring-ai/prompt").permitAll() //Test Message
                                 .requestMatchers(HttpMethod.GET,"/track-ai/tracktidy-package").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/email/send").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/track-ai/generate-package").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/track-ai/generate-package").permitAll()
+
                                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
@@ -98,10 +105,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");
+        configuration.setAllowedOriginPatterns(List.of("*")); // Use patterns to allow all origins
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
-        configuration.setAllowCredentials(false);
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

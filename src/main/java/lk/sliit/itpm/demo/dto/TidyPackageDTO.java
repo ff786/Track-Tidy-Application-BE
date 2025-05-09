@@ -1,6 +1,5 @@
 package lk.sliit.itpm.demo.dto;
 
-import lk.sliit.itpm.demo.document.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,15 +11,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TidyGroceryDTO {
+public class TidyPackageDTO {
 
     private String id;
-    private String itemName;
     private String userId;
-    private String productId;
-    private int quantity;
-    private int price;
-    private Date expiryDate;
-    private byte[] itemImage;
-    private User approvedBy;
+    private String packageType;
+    private int packageValue;
+    private int groceryValue;
+    private int serviceValue;
+    private int inventoryValue;
+    private Date subscribeDate;
 }

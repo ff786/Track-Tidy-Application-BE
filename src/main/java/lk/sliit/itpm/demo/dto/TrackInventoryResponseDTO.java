@@ -5,24 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TidyInventoryDTO {
+public class TrackInventoryResponseDTO {
 
     private String id;
-    private String userId;
-    private String productName;
     private String productId;
-    private int quantity;
-    private int WarrantyPeriod;
-    private int productValue;
+    private String productName;
     private String productCategory;
-    private byte[] ProductImage;
-    private String productImageBase64;
+    private int productValue;
+    private int WarrantyPeriod;
+    private int quantity;
     private String faulted;
-
+    private String productImageBase64;
 }
+

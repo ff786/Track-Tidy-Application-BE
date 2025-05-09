@@ -2,6 +2,7 @@ package lk.sliit.itpm.demo.service.impl;
 
 import lk.sliit.itpm.demo.document.TrackInventory;
 import lk.sliit.itpm.demo.dto.TidyInventoryDTO;
+import lk.sliit.itpm.demo.dto.TrackInventoryResponseDTO;
 import lk.sliit.itpm.demo.repository.TrackInventoryRepository;
 import lk.sliit.itpm.demo.service.TrackTidyInventoryService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,14 +29,14 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
     @Override
     public TrackInventory createTidyInventory(TidyInventoryDTO inventory) {
         TrackInventory map =TrackInventory.builder()
-                .userId(inventory.getUserId())
+                .id(inventory.getId())
                 .productId(inventory.getProductId())
                 .productName(inventory.getProductName())
                 .productCategory(inventory.getProductCategory())
                 .quantity(inventory.getQuantity())
                 .WarrantyPeriod(inventory.getWarrantyPeriod())
                 .productValue(inventory.getProductValue())
-                .ProductImage(inventory.getProductImage())
+                .ProductImage(inventory.getProductImageBase64().getBytes())
                 .build();
 
         return trackInventoryRepository.save(map);
@@ -51,9 +52,27 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
     }
 
     @Override
-    public List<TrackInventory> getAllTidyInventory() {
-        return trackInventoryRepository.findAll();
+    public List<TrackInventoryResponseDTO> getAllTidyInventory() {
+        List<TrackInventory> inventoryList = trackInventoryRepository.findAll();
+        return inventoryList.stream().map(item -> {
+            String base64Image = item.getProductImage() != null
+                    ? "data:image/jpeg;base64," + java.util.Base64.getEncoder().encodeToString(item.getProductImage())
+                    : null;
+
+            return TrackInventoryResponseDTO.builder()
+                    .id(item.getId())
+                    .productId(item.getProductId())
+                    .productName(item.getProductName())
+                    .productCategory(item.getProductCategory())
+                    .productValue(item.getProductValue())
+                    .WarrantyPeriod(item.getWarrantyPeriod())
+                    .quantity(item.getQuantity())
+                    .faulted(item.getFaulted())
+                    .productImageBase64(base64Image)
+                    .build();
+        }).toList();
     }
+
 
     @Override
     public TrackInventory updateTidyInventory(String id, TidyInventoryDTO inventory) {
@@ -68,7 +87,7 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
         trackInventory1.setQuantity(inventory.getQuantity());
         trackInventory1.setWarrantyPeriod(inventory.getWarrantyPeriod());
         trackInventory1.setProductValue(inventory.getProductValue());
-        trackInventory1.setProductImage(inventory.getProductImage());
+        trackInventory1.setProductImage(inventory.getProductImageBase64().getBytes());
 
         return trackInventoryRepository.save(trackInventory1);
     }

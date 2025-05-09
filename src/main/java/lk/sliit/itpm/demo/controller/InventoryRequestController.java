@@ -1,9 +1,9 @@
 package lk.sliit.itpm.demo.controller;
 
+
 import jakarta.validation.constraints.NotNull;
 import lk.sliit.itpm.demo.document.TrackInventory;
 import lk.sliit.itpm.demo.dto.TidyInventoryDTO;
-import lk.sliit.itpm.demo.dto.TrackInventoryResponseDTO;
 import lk.sliit.itpm.demo.service.TrackTidyInventoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -12,18 +12,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.List;
 
 @RestController
-@RequestMapping("inventory")
+@RequestMapping("inventory/request")
 @Slf4j
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class InventoryTrackController {
+public class InventoryRequestController {
 
     private final TrackTidyInventoryService trackTidyInventoryService;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public InventoryTrackController(TrackTidyInventoryService trackTidyInventoryService) {
+    public InventoryRequestController(TrackTidyInventoryService trackTidyInventoryService) {
         this.trackTidyInventoryService = trackTidyInventoryService;
     }
 
@@ -44,44 +45,11 @@ public class InventoryTrackController {
                 .WarrantyPeriod(WarrantyPeriod)
                 .productValue(productValue)
                 .productCategory(productCategory)
-                .ProductImage(ProductImage.getBytes())
+                .productImageBase64(Arrays.toString(ProductImage.getBytes()))
                 .build();
 
         return ResponseEntity.status(201).body(trackTidyInventoryService.createTidyInventory(build));
 
     }
 
-    @DeleteMapping("delete")
-    public void deleteTidyInventory(@RequestParam("id") @NotNull String id) {
-        trackTidyInventoryService.deleteTidyInventory(id);
-    }
-
-    @GetMapping("getAll")
-    public List<TrackInventoryResponseDTO> getAllTidyInventory() {
-        return trackTidyInventoryService.getAllTidyInventory();
-    }
-
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PutMapping("update/{id}")
-    public ResponseEntity<TrackInventory> updateTidyInventory(
-            @PathVariable("id") @NotNull String id,
-            @RequestParam("productName") @NotNull String productName,
-            @RequestParam("productId") @NotNull String productId,
-            @RequestParam("quantity") @NotNull int quantity,
-            @RequestParam("productValue") @NotNull int productValue,
-            @RequestParam("productCategory") @NotNull String productCategory,
-            @RequestParam(value = "ProductImage", required = false) MultipartFile ProductImage) throws ParseException, IOException {
-
-        TidyInventoryDTO build = TidyInventoryDTO.builder()
-                .productName(productName)
-                .productId(productId)
-                .quantity(quantity)
-                .productValue(productValue)
-                .productCategory(productCategory)
-                .productImageBase64(Arrays.toString(ProductImage.getBytes()))
-                .build();
-
-        return ResponseEntity.status(201).body(trackTidyInventoryService.updateTidyInventory(id, build));
-
-    }
 }
