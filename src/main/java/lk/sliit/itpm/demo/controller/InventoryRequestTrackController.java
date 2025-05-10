@@ -1,10 +1,10 @@
+/*
 package lk.sliit.itpm.demo.controller;
-
 
 import jakarta.validation.constraints.NotNull;
 import lk.sliit.itpm.demo.document.TrackInventory;
 import lk.sliit.itpm.demo.dto.TidyInventoryDTO;
-import lk.sliit.itpm.demo.service.TrackTidyInventoryService;
+import lk.sliit.itpm.demo.service.TrackRequestInventoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,20 +12,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 
 @RestController
 @RequestMapping("inventory/request")
 @Slf4j
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class InventoryRequestController {
+public class InventoryRequestTrackController {
 
-    private final TrackTidyInventoryService trackTidyInventoryService;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final TrackRequestInventoryService trackRequestInventoryService;
 
-    public InventoryRequestController(TrackTidyInventoryService trackTidyInventoryService) {
-        this.trackTidyInventoryService = trackTidyInventoryService;
+    public InventoryRequestTrackController(TrackRequestInventoryService trackRequestInventoryService) {
+        this.trackRequestInventoryService = trackRequestInventoryService;
     }
 
     @PostMapping("create")
@@ -45,11 +42,11 @@ public class InventoryRequestController {
                 .WarrantyPeriod(WarrantyPeriod)
                 .productValue(productValue)
                 .productCategory(productCategory)
-                .productImageBase64(Arrays.toString(ProductImage.getBytes()))
+                .ProductImage(ProductImage.getBytes())
                 .build();
 
-        return ResponseEntity.status(201).body(trackTidyInventoryService.createTidyInventory(build));
+        return ResponseEntity.status(201).body(trackRequestInventoryService.createTidyInventory(build));
 
     }
-
 }
+*/

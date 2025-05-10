@@ -1,6 +1,7 @@
 package lk.sliit.itpm.demo.service.impl;
 
 import lk.sliit.itpm.demo.document.TrackGrocery;
+import lk.sliit.itpm.demo.document.TrackInventory;
 import lk.sliit.itpm.demo.dto.TidyGroceryDTO;
 import lk.sliit.itpm.demo.repository.TrackGroceryRepository;
 import lk.sliit.itpm.demo.service.TrackTidyGroceryService;
@@ -27,11 +28,11 @@ public class TrackTidyGroceryServiceImpl implements TrackTidyGroceryService {
 
     @Override
     public TrackGrocery createTidyGrocery(TidyGroceryDTO grocery) {
-
         TrackGrocery map =TrackGrocery.builder()
+                .id(grocery.getId())
                 .itemName(grocery.getItemName())
                 .productId(grocery.getProductId())
-                .price(grocery.getQuantity())
+                .quantity(grocery.getQuantity())
                 .price(grocery.getPrice())
                 .expiryDate(grocery.getExpiryDate())
                 .itemImage(grocery.getItemImage())
@@ -50,8 +51,33 @@ public class TrackTidyGroceryServiceImpl implements TrackTidyGroceryService {
     }
 
     @Override
-    public List<TrackGrocery> getAllTidyGrocery() {
-        return trackGroceryRepository.findAll();
+    public List<TidyGroceryDTO> getAllTidyGrocery() {
+        List<TrackGrocery> groceryList = trackGroceryRepository.findAll();
+        return groceryList.stream().map(item -> {
+            String base64Image = item.getItemImage() != null
+                    ? "data:image/jpeg;base64," + java.util.Base64.getEncoder().encodeToString(item.getItemImage())
+                    : null;
+
+            return TidyGroceryDTO.builder()
+                    .id(item.getId())
+                    .itemName(item.getItemName())
+                    .productId(item.getProductId())
+                    .price(item.getPrice())
+                    .quantity(item.getQuantity())
+                    .expiryDate(item.getExpiryDate())
+                    .productImageBase64(base64Image)
+                    .build();
+        }).toList();
+    }
+
+    @Override
+    public TrackGrocery getGroceryById(String TrackTidyId) {
+
+        Optional<TrackGrocery> grocery = trackGroceryRepository.findById(TrackTidyId);
+        if (!grocery.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + TrackTidyId);
+        }
+        return grocery.get();
     }
 
     @Override
@@ -67,7 +93,9 @@ public class TrackTidyGroceryServiceImpl implements TrackTidyGroceryService {
         trackGrocery1.setQuantity(grocery.getQuantity());
         trackGrocery1.setPrice(grocery.getPrice());
         trackGrocery1.setExpiryDate(grocery.getExpiryDate());
-        trackGrocery1.setItemImage(grocery.getItemImage());
+        if (grocery.getItemImage() != null) {
+            trackGrocery1.setItemImage(grocery.getItemImage());
+        }
 
         return trackGroceryRepository.save(trackGrocery1);
     }

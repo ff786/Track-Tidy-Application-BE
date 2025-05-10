@@ -26,52 +26,61 @@ public class PackageRecommendationService {
     }
 
     public String generatePackage(String codeSnippet) {
+
+        System.out.println(codeSnippet);
         String prompt = String.format("""
-            You are a helpful assistant for the TrackTidy website. The user is looking for a package that includes:
-            
-            %s
-        
-            1. Maintenance & Service (plumbing, electrical, etc.)
-            2. Grocery Shopping (they can purchase groceries up to a certain value)
-            3. Home Inventory (requesting appliances or home-related items)
+        You are a helpful assistant for the TrackTidy website. The user is looking for a service package that includes:
 
-            You need to do the following:
-            - First check if the user is clearly referring to one of the 3 standard packages.
-                a. Basic: 30,000 (Grocery: 15,000, Maintenance: 10,000, Appliances: 5,000)
-                b. Ultra: 70,000 (Grocery: 30,000, Maintenance: 20,000, Appliances: 20,000)
-                c. Premium: 100,000 (Grocery: 50,000, Maintenance: 35,000, Appliances: 25,000)
+        1. Maintenance & Service (plumbing, electrical, etc.)
+        2. Grocery Shopping (they can purchase groceries up to a certain value)
+        3. Home Inventory (requesting appliances or home-related items)
 
-            - If not, guide the user to create a custom package by asking:
-                1. Monthly income
-                2. How much they can spend
-                3. Which category is more important to them
-                4. Their preferences among Grocery / Maintenance / Inventory
+        Your job is to help the user find the most suitable package.
 
-            - Finally, provide a nicely formatted suggestion like this:
-                {
-                  "type": "Custom Package",
-                  "totalBudget": 60000,
-                  "breakdown": {
-                    "Grocery": 25000,
-                    "Maintenance": 20000,
-                    "Inventory": 15000
-                  },
-                  "comment": "Based on your preferences, we’ve created a custom package favoring groceries and maintenance equally."
-                }
+        Follow these steps:
 
-            Always keep responses short, friendly, and suitable to show in a modern UI.
-            """, codeSnippet);
+        1. First, check if the user's description clearly matches any of the 3 standard packages below:
+            a. Basic: 30,000 (Grocery: 15,000, Maintenance: 10,000, Appliances: 5,000)
+            b. Ultra: 70,000 (Grocery: 30,000, Maintenance: 20,000, Appliances: 20,000)
+            c. Premium: 100,000 (Grocery: 50,000, Maintenance: 35,000, Appliances: 25,000)
 
-        Map<String, Object> messageSystem = Map.of("role", "system",
-                "content", "You are a helpful assistant for the TrackTidy website.");
+        2. If it's unclear or they want something different, then ask the following questions one at a time:
+            - What is your monthly income?
+            - How much can you spend on this service?
+            - Which of these categories is most important to you: Grocery, Maintenance, or Inventory?
+            - How would you like to prioritize your budget among Grocery, Maintenance, and Inventory?
 
-        Map<String, Object> messageUser = Map.of("role", "user", "content", prompt);
+        3. After gathering all the necessary inputs, create and return a clean and user-friendly package suggestion like this:
+
+        {
+          "type": "Custom Package",
+          "totalBudget": 60000,
+          "breakdown": {
+            "Grocery": 25000,
+            "Maintenance": 20000,
+            "Inventory": 15000
+          },
+          "comment": "Based on your preferences, we’ve created a custom package favoring groceries and maintenance equally."
+        }
+
+        Keep the tone friendly and answers short — suitable for a modern web UI.
+        """);
+
+        Map<String, Object> messageSystem = Map.of(
+                "role", "system",
+                "content", prompt
+        );
+
+        Map<String, Object> messageUser = Map.of(
+                "role", "user",
+                "content", codeSnippet
+        );
 
         Map<String, Object> request = Map.of(
                 "model", "gpt-4o",
                 "messages", List.of(messageSystem, messageUser),
-                "max_tokens", 500,
-                "temperature", 0.5,
+                "max_tokens", 3096,
+                "temperature", 0.1,
                 "n", 1
         );
 

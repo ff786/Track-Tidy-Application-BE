@@ -23,4 +23,5 @@ public class TidyGroceryDTO {
     private Date expiryDate;
     private byte[] itemImage;
     private User approvedBy;
+    private String productImageBase64;
 }
