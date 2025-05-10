@@ -69,19 +69,21 @@ public class GroceryTrackController {
             @PathVariable("id") @NotNull String id,
             @RequestParam("itemName") @NotNull String itemName,
             @RequestParam("productId") @NotNull String productId,
+            @RequestParam("expiryDate") @NotNull String expiryDate,
             @RequestParam("quantity") @NotNull int quantity,
             @RequestParam("price") @NotNull int price,
-            @RequestParam("itemImage") MultipartFile itemImage) throws ParseException, IOException {
+            @RequestParam(value = "itemImage", required = false) @Nullable MultipartFile itemImage) throws ParseException, IOException {
 
         TrackGrocery grocery = trackTidyGroceryService.getGroceryById(id);
 
         if (itemName != null){
             grocery.setItemName(itemName);
         }
+        grocery.setUserId(user.getEmail());
         grocery.setProductId(productId);
+        grocery.setExpiryDate(dateFormat.parse(expiryDate));
         grocery.setQuantity(quantity);
         grocery.setPrice(price);
-        grocery.setExpiryDate(dateFormat.parse(dateFormat.format(grocery.getExpiryDate())));
 
         if (itemImage != null){
             grocery.setItemImage(itemImage.getBytes());
@@ -93,6 +95,7 @@ public class GroceryTrackController {
                 .productId(grocery.getProductId())
                 .quantity(grocery.getQuantity())
                 .price(grocery.getPrice())
+                .expiryDate(grocery.getExpiryDate())
                 .itemImage(grocery.getItemImage())
                 .build();
 
