@@ -46,6 +46,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST,"/user/request/token").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/user/getUsers").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/admin/getAll").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/admin/reset-password").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/user/delete/{id}").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/otp/request").permitAll() //Complete User
                                 .requestMatchers(HttpMethod.POST,"/inventory/create").permitAll()
