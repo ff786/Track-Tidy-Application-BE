@@ -17,7 +17,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
@@ -33,6 +32,13 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        String requestPath = request.getServletPath();
+
+        if (isPublicEndpoint(requestPath)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         final String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || authHeader.isEmpty() || !authHeader.startsWith("Bearer ")) {
@@ -44,9 +50,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         final String username = jwtService.extractUserName(jwt);
 
         if (StringUtils.isNotEmpty(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-            UserDetails userDetails = userService.userDetailsService()
-                    .loadUserByUsername(username);
+            UserDetails userDetails = userService.userDetailsService().loadUserByUsername(username);
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
@@ -56,7 +60,11 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.setContext(context);
             }
         }
+
         filterChain.doFilter(request, response);
     }
 
+    private boolean isPublicEndpoint(String path) {
+        return path.equals("/api/track-tidy/user/reset-password");
+    }
 }

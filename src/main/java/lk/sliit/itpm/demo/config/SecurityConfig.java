@@ -35,12 +35,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
-
+        
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->
                         request
+                                .requestMatchers(HttpMethod.POST,"/api/track-tidy/user/reset-password").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/register").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/request/token").permitAll()
@@ -105,7 +105,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("*")); // Use patterns to allow all origins
+        configuration.setAllowedOriginPatterns(List.of("*"));
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
