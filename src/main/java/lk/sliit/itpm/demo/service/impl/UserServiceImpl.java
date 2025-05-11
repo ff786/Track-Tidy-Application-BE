@@ -187,7 +187,7 @@ public class UserServiceImpl implements UserService {
         }
         
         // Update with new password
-        user.setPassword(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
 
