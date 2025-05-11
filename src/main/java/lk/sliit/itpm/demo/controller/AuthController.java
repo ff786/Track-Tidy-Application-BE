@@ -21,7 +21,6 @@ public class AuthController {
     public ResponseEntity<Void> resetPassword(@RequestBody JsonNode jsonNode) {
         String email = jsonNode.get("email").asText();
         String newPassword = jsonNode.get("newPassword").asText();
-        String confirmPassword = jsonNode.get("confirmPassword").asText();
         userService.resetPassword(email, newPassword);
         return ResponseEntity.ok().build();
     }
