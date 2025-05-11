@@ -19,6 +19,7 @@ public class TrackInventory {
 
     @Id
     private String id;
+    private String userId;
     private String productId;
     private String productName;
     private String productCategory;
@@ -27,8 +28,10 @@ public class TrackInventory {
     private byte[] ProductImage;
     private int quantity;
     private String faulted;
-    private Date warrantyDate;
-    private User approvedBy;
+    private Date requestDate;
     private String productImageBase64;
+
+    private boolean isApproved = false;
+    private User approvedBy;
 
 }
