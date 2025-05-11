@@ -36,7 +36,7 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
                 .quantity(inventory.getQuantity())
                 .WarrantyPeriod(inventory.getWarrantyPeriod())
                 .productValue(inventory.getProductValue())
-                .ProductImage(inventory.getProductImageBase64().getBytes())
+                .ProductImage(inventory.getProductImage())
                 .build();
 
         return trackInventoryRepository.save(map);
@@ -67,15 +67,25 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
                     .productValue(item.getProductValue())
                     .WarrantyPeriod(item.getWarrantyPeriod())
                     .quantity(item.getQuantity())
-                    .faulted(item.getFaulted())
                     .productImageBase64(base64Image)
                     .build();
         }).toList();
     }
 
+    @Override
+    public TrackInventory getInventoryById(String id) {
+
+        Optional<TrackInventory> inventory = trackInventoryRepository.findById(id);
+        if (!inventory.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + id);
+        }
+        return inventory.get();
+    }
+
 
     @Override
     public TrackInventory updateTidyInventory(String id, TidyInventoryDTO inventory) {
+
         Optional<TrackInventory> byId = trackInventoryRepository.findById(id);
         if (!byId.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + id);
@@ -87,7 +97,9 @@ public class TrackTidyInventoryServiceImpl implements TrackTidyInventoryService 
         trackInventory1.setQuantity(inventory.getQuantity());
         trackInventory1.setWarrantyPeriod(inventory.getWarrantyPeriod());
         trackInventory1.setProductValue(inventory.getProductValue());
-        trackInventory1.setProductImage(inventory.getProductImageBase64().getBytes());
+        if (inventory.getProductImage() != null) {
+            trackInventory1.setProductImage(inventory.getProductImage());
+        }
 
         return trackInventoryRepository.save(trackInventory1);
     }

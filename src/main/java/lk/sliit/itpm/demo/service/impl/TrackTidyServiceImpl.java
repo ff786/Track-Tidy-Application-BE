@@ -34,6 +34,7 @@ public class TrackTidyServiceImpl implements TrackTidyService {
                 .memberName(service.getMemberName())
                 .address(service.getAddress())
                 .email(service.getEmail())
+                .phoneNumber(service.getPhoneNumber())
                 .serviceType(service.getServiceType())
                 .serviceDesc(service.getServiceDesc())
                 .referralCode(service.getReferralCode()).build();
@@ -53,6 +54,16 @@ public class TrackTidyServiceImpl implements TrackTidyService {
     @Override
     public List<TrackService> getAllTidyService() {
         return trackServiceRepository.findAll();
+    }
+
+    @Override
+    public TrackService getTidServiceById(String TrackTidyId) {
+
+        Optional<TrackService> service = trackServiceRepository.findById(TrackTidyId);
+        if (!service.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot find Service with TrackTidyId: " + TrackTidyId);
+        }
+        return service.get();
     }
 
     @Override

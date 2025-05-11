@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/track-tidy/user")  // Add leading slash
+@RequestMapping("user")
 @Slf4j
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
@@ -56,5 +56,6 @@ public class UserController {
         userService.resetPassword(email, newPassword);
         return ResponseEntity.ok().build();
     }
+
 
 }

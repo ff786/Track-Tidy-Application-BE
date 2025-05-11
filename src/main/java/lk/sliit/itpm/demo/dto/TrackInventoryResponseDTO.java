@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +21,7 @@ public class TrackInventoryResponseDTO {
     private int WarrantyPeriod;
     private int quantity;
     private String faulted;
+    private Date requestDate;
     private String productImageBase64;
 }
 

@@ -1,13 +1,19 @@
 package lk.sliit.itpm.demo.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Setter
+@Getter
+@ToString
 public class UserPromptRequest {
-    private String codeSnippet;
+    private String userPromptRequest;
 
-    public String getUserPromptRequest() {
-        return codeSnippet;
-    }
-
-    public void setUserPromptRequest(String codeSnippet) {
-        this.codeSnippet = codeSnippet;
+    @Override
+    public String toString() {
+        return "UserPromptRequest{" +
+                "userPromptRequest='" + userPromptRequest + '\'' +
+                '}';
     }
 }

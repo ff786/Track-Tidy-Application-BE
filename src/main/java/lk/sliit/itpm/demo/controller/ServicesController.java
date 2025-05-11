@@ -74,13 +74,25 @@ public class ServicesController {
             @RequestParam("phoneNumber") @NotNull String phoneNumber,
             @RequestParam("address") @NotNull String address ) throws ParseException, IOException {
 
+        TrackService service = trackTidyService.getTidServiceById(id);
+
+        if (memberName != null){
+            service.setMemberName(memberName);
+        }
+        service.setEmail(email);
+        service.setServiceType(serviceType);
+        service.setServiceDesc(serviceDesc);
+        service.setPhoneNumber(phoneNumber);
+        service.setAddress(address);
+        service.setReferralCode(service.getReferralCode());
+
         TidyServiceDTO build = TidyServiceDTO.builder()
-                .memberName(memberName)
-                .email(email)
-                .serviceType(serviceType)
-                .serviceDesc(serviceDesc)
-                .phoneNumber(phoneNumber)
-                .address(address)
+                .memberName(service.getMemberName())
+                .email(service.getEmail())
+                .serviceType(service.getServiceType())
+                .serviceDesc(service.getServiceDesc())
+                .phoneNumber(service.getPhoneNumber())
+                .address(service.getAddress())
                 .build();
 
         return ResponseEntity.status(201).body(trackTidyService.updateTidyService(id, build));

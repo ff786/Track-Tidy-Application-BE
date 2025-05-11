@@ -24,5 +24,6 @@ public class TidyInventoryDTO {
     private byte[] ProductImage;
     private String productImageBase64;
     private String faulted;
+    private Date requestDate;
 
 }

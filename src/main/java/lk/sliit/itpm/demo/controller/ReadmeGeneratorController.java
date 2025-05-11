@@ -23,6 +23,7 @@ public class ReadmeGeneratorController {
     @PostMapping("/generate-package")
     public ResponseEntity<String> recommendPackage(@RequestBody UserPromptRequest request) {
         String result = packageRecommendationService.generatePackage(request.getUserPromptRequest());
+        System.out.println("This is request" + request.toString());
         if (result != null) {
             return ResponseEntity.ok(result);
         } else {

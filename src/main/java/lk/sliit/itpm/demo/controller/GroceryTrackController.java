@@ -30,7 +30,6 @@ public class GroceryTrackController {
         this.trackTidyGroceryService = trackTidyGroceryService;
     }
 
-
     @PostMapping("create")
     public ResponseEntity<TrackGrocery> createTidyGrocery(
             @RequestParam("itemName") @NotNull String itemName,
@@ -59,27 +58,45 @@ public class GroceryTrackController {
     }
 
     @GetMapping("getAll")
-    public List<TrackGrocery> getAllTidyGrocery() {
+    public List<TidyGroceryDTO> getAllTidyGrocery() {
         return trackTidyGroceryService.getAllTidyGrocery();
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("update/{id}")
     public ResponseEntity<TrackGrocery> updateTidyGrocery(
-            @PathVariable("id") @NotNull String id,
             @AuthenticationPrincipal User user,
+            @PathVariable("id") @NotNull String id,
             @RequestParam("itemName") @NotNull String itemName,
             @RequestParam("productId") @NotNull String productId,
+            @RequestParam("expiryDate") @NotNull String expiryDate,
             @RequestParam("quantity") @NotNull int quantity,
             @RequestParam("price") @NotNull int price,
-            @RequestParam("itemImage") MultipartFile itemImage) throws ParseException, IOException {
+            @RequestParam(value = "itemImage", required = false) @Nullable MultipartFile itemImage) throws ParseException, IOException {
+
+        TrackGrocery grocery = trackTidyGroceryService.getGroceryById(id);
+
+        if (itemName != null){
+            grocery.setItemName(itemName);
+        }
+        grocery.setUserId(user.getEmail());
+        grocery.setProductId(productId);
+        grocery.setExpiryDate(dateFormat.parse(expiryDate));
+        grocery.setQuantity(quantity);
+        grocery.setPrice(price);
+
+        if (itemImage != null){
+            grocery.setItemImage(itemImage.getBytes());
+        }
 
         TidyGroceryDTO build = TidyGroceryDTO.builder()
-                .itemName(itemName)
-                .userId(user.getEmail())
-                .productId(productId)
-                .quantity(quantity)
-                .price(price)
-                .itemImage(itemImage.getBytes())
+                .itemName(grocery.getItemName())
+                .userId(grocery.getUserId())
+                .productId(grocery.getProductId())
+                .quantity(grocery.getQuantity())
+                .price(grocery.getPrice())
+                .expiryDate(grocery.getExpiryDate())
+                .itemImage(grocery.getItemImage())
                 .build();
 
         return ResponseEntity.status(201).body(trackTidyGroceryService.updateTidyGrocery(id, build));
