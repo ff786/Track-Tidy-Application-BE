@@ -16,11 +16,11 @@ public class AuthController {
         this.userService = userService;
     }
 
+
     @PostMapping("/reset-password")
     public ResponseEntity<Void> resetPassword(@RequestBody JsonNode jsonNode) {
         String email = jsonNode.get("email").asText();
         String newPassword = jsonNode.get("newPassword").asText();
-        
         userService.resetPassword(email, newPassword);
         return ResponseEntity.ok().build();
     }

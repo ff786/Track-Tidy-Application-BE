@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/track-tidy/user")  // Add leading slash
+@RequestMapping("user")
 @Slf4j
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
@@ -50,12 +50,12 @@ public class UserController {
     }
     @PostMapping("/reset-password")  // Remove leading slash
     public ResponseEntity<Void> resetPassword(@RequestBody JsonNode jsonNode) {
-        log.info("Reset password request received for email: {}", jsonNode.get("email").asText());
         String email = jsonNode.get("email").asText();
         String newPassword = jsonNode.get("newPassword").asText();
         
         userService.resetPassword(email, newPassword);
         return ResponseEntity.ok().build();
     }
+
 
 }
