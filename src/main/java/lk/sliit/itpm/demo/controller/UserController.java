@@ -50,7 +50,6 @@ public class UserController {
     }
     @PostMapping("/reset-password")  // Remove leading slash
     public ResponseEntity<Void> resetPassword(@RequestBody JsonNode jsonNode) {
-        log.info("Reset password request received for email: {}", jsonNode.get("email").asText());
         String email = jsonNode.get("email").asText();
         String newPassword = jsonNode.get("newPassword").asText();
         
