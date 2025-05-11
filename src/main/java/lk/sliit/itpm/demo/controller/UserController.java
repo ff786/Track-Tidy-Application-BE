@@ -48,5 +48,14 @@ public class UserController {
     public void requestOTP(@RequestBody JsonNode jsonNode) {
         userService.requestOTP(jsonNode.get("email").asText(), jsonNode.get("password").asText());
     }
+    @PostMapping("/reset-password")  // Remove leading slash
+    public ResponseEntity<Void> resetPassword(@RequestBody JsonNode jsonNode) {
+        String email = jsonNode.get("email").asText();
+        String newPassword = jsonNode.get("newPassword").asText();
+        
+        userService.resetPassword(email, newPassword);
+        return ResponseEntity.ok().build();
+    }
+
 
 }
