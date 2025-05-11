@@ -15,6 +15,7 @@ public class AuthController {
     public AuthController(UserService userService) {
         this.userService = userService;
     }
+    
 
     @PostMapping("/reset-password")
     public ResponseEntity<Void> resetPassword(@RequestBody JsonNode jsonNode) {
