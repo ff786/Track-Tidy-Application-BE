@@ -168,5 +168,18 @@ public class UserServiceImpl implements UserService {
         );
     }
 
+    @Override
+    public void resetPassword(String email, String newPassword) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+        
+        // Update with new password
+        user.setPassword(newPassword);
+        userRepository.save(user);
+    }
+
+
 
 }
