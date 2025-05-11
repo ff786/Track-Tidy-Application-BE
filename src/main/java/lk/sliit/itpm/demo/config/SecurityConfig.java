@@ -40,13 +40,11 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->
                         request
-                                .requestMatchers(HttpMethod.POST,"/api/track-tidy/user/reset-password").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/register").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/request/token").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/user/getUsers").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/admin/getAll").permitAll()
-                                .requestMatchers(HttpMethod.POST,"/admin/reset-password").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/user/delete/{id}").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/otp/request").permitAll() //Complete User
                                 .requestMatchers(HttpMethod.POST,"/inventory/create").permitAll()
@@ -74,7 +72,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST,"/email/send").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/track-ai/generate-package").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/track-ai/generate-package").permitAll()
-
+                                .requestMatchers(HttpMethod.POST,"/api/auth/reset-password").permitAll() // New endpoint
                                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
