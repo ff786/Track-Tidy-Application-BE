@@ -51,5 +51,4 @@ public class AdminController {
         return userService.updateUser(id, user);
     }
 
-
 }

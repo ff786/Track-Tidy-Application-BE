@@ -20,13 +20,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 
 @Service
 @Slf4j
@@ -39,25 +37,15 @@ public class UserServiceImpl implements UserService {
 
     private final EmailSender emailSender;
     private final ModelMapper modelMapper;
-    private final PasswordEncoder passwordEncoder;
-    
     private static final Random random = new Random();
 
 
-    @Autowired
-    public UserServiceImpl(
-            ModelMapper modelMapper, 
-            UserRepository userRepository, 
-            SMSRepository smsRepository, 
-            EmailSender emailSender, 
-            JWTService jwtService,
-            @Lazy PasswordEncoder passwordEncoder) {  // Add @Lazy here
+    public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository, SMSRepository smsRepository, EmailSender emailSender, JWTService jwtService) {
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.emailSender = emailSender;
         this.smsRepository = smsRepository;
         this.jwtService = jwtService;
-        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -178,17 +166,6 @@ public class UserServiceImpl implements UserService {
                 "Your OTP Code",
                 "Dear " + user.getFirstName() + ",\n\nYour OTP is: " + otp + "\n\nIt will expire in 24 hours.\n\nRegards,\nYour App Team"
         );
-    }
-    @Override
-    public void resetPassword(String email, String newPassword) {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-        }
-        
-        // Update with new password
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
     }
 
 

@@ -21,5 +21,4 @@ public interface UserService {
     void deleteUSer(String id);
     User updateUser(String id, UserDTO user);
     void requestOTP(String email, String password);
-    void resetPassword(String email, String newPassword);
 }
