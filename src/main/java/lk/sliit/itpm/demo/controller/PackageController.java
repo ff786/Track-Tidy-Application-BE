@@ -83,4 +83,9 @@ public class PackageController {
         return ResponseEntity.status(201).body(trackTidyPackageService.updateTidyPackages(id, build));
 
     }
+
+    @PutMapping("extend/{id}")
+    public void extendTidyPackages(@PathVariable("id") @NotNull String id) {
+        trackTidyPackageService.extendTidyPackages(id);
+    }
 }

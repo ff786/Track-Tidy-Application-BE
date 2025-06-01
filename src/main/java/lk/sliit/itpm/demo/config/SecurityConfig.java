@@ -46,7 +46,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST,"/user/request/token").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/user/getUsers").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/admin/getAll").permitAll()
-                                .requestMatchers(HttpMethod.DELETE,"/user/delete/{id}").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/admin/delete/{id}").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/admin/delete").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/otp/request").permitAll() //Complete User
                                 .requestMatchers(HttpMethod.POST,"/inventory/create").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/inventory/getAll").permitAll()
@@ -71,6 +72,26 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/spring-ai/prompt").permitAll() //Test Message
                                 .requestMatchers(HttpMethod.GET,"/track-ai/generate-package").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/track-ai/generate-package").permitAll()
+
+                                .requestMatchers(HttpMethod.POST,"/inventory/request/create").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/inventory/request/getAll").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/inventory/request/delete").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/inventory/request/delete").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/inventory/request/approve/{id}").permitAll()
+
+                                .requestMatchers(HttpMethod.POST,"/grocery/request/create").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/grocery/request/getAll").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/grocery/request/delete").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/grocery/request/delete").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/grocery/request/approve/{id}").permitAll()
+
+                                .requestMatchers(HttpMethod.POST,"/package/create").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/package/delete").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/package/getAll").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/package/update").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/package/update/{id}").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/package/extend").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/package/extend/{id}").permitAll()
 
                                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 
@@ -107,7 +128,7 @@ public class SecurityConfig {
         configuration.setAllowedOriginPatterns(List.of("*")); // Use patterns to allow all origins
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
-        configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(Boolean.valueOf(true));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

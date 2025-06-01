@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -60,4 +60,28 @@ public class TrackTidyPackageServiceImpl implements TrackTidyPackageService {
     public TrackPackage updateTidyPackages(String TrackTidyId, TidyPackageDTO packages) {
         return null;
     }
+
+    @Override
+    public void extendTidyPackages(String id) {
+        Optional<TrackPackage> optionalPackage = trackPackagesRepository.findById(id);
+
+        if (optionalPackage.isPresent()) {
+            TrackPackage tidyPackage = optionalPackage.get();
+
+            // Extend subscribeDate by 1 month using Calendar
+            Date currentDate = tidyPackage.getSubscribeDate();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(currentDate);
+            calendar.add(Calendar.MONTH, 1);  // Add 1 month
+
+            Date extendedDate = calendar.getTime();
+            tidyPackage.setSubscribeDate(extendedDate);
+
+            trackPackagesRepository.save(tidyPackage);
+        } else {
+            throw new NoSuchElementException("TidyPackage with ID " + id + " not found.");
+        }
+    }
+
+
 }
