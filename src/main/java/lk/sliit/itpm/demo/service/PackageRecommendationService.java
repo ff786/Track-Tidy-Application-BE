@@ -25,6 +25,11 @@ public class PackageRecommendationService {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Monthly Income: 120000 I can spend 110000 on this service my preference is grocery, I can spend 65000 on grocery and I also prioritize grocery
+     * @Author Farsith Fawzer
+     */
+
     public String generatePackage(String codeSnippet) {
 
         System.out.println(codeSnippet);

@@ -12,6 +12,6 @@ public interface TrackTidyPackageService {
     void deleteTidyPackages(String TrackTidyId);
     List<TrackPackage> getAllTidyPackages();
     TrackPackage updateTidyPackages(String TrackTidyId, TidyPackageDTO packages);
-    //void approveTidyPackages(String id);
+    void extendTidyPackages(String id);
 
 }
